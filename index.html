@@ -4121,6 +4121,13 @@ function fbErrorMsg(code) {
     'auth/cancelled-popup-request': 'Sign-in cancelled.',
     'auth/user-disabled': 'This account has been disabled.',
     'auth/requires-recent-login': 'Please sign in again to continue.',
+    'auth/operation-not-allowed': 'This sign-in method is not enabled. Go to Firebase Console → Authentication → Sign-in method and enable Email/Password.',
+    'auth/configuration-not-found': 'Firebase Auth not configured. Enable Email/Password in Firebase Console.',
+    'auth/unauthorized-domain': 'This domain is not authorized. Add rs-chesss.netlify.app to Firebase Console → Authentication → Settings → Authorized domains.',
+    'auth/internal-error': 'Firebase internal error. Check Firebase Console configuration.',
+    'auth/api-key-not-valid': 'Invalid Firebase API key. Check your Firebase project settings.',
+    'auth/app-not-authorized': 'App not authorized. Add rs-chesss.netlify.app to Firebase Authorized domains.',
+
   };
   return map[code] || 'Something went wrong. Please try again.';
 }
@@ -4150,7 +4157,9 @@ async function doSignIn() {
     msg.innerHTML = '<span class="form-success">✓ Signed in!</span>';
     setTimeout(() => showPage('home'), 600);
   } catch(e) {
-    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)}</span>`;
+    const code = e.code || 'unknown';
+    const detail = code !== 'unknown' ? ` (${code})` : ` (${e.message || 'unknown error'})`;
+    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)}${detail}</span>`;
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -4177,7 +4186,7 @@ async function doSignUp() {
     msg.innerHTML = '<span class="form-success">✓ Account created! Check your email to verify.</span>';
     setTimeout(() => showPage('home'), 1200);
   } catch(e) {
-    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)}</span>`;
+    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)} [${e.code||e.message||'?'}]</span>`;
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -4190,7 +4199,7 @@ async function loginWithGoogle() {
     if (msg) msg.innerHTML = '<span class="form-success">✓ Signed in with Google!</span>';
     setTimeout(() => showPage('home'), 600);
   } catch(e) {
-    if (msg) msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)}</span>`;
+    if (msg) msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)} [${e.code||e.message||'?'}]</span>`;
     else showToast(fbErrorMsg(e.code), 'error');
   }
 }
@@ -4218,7 +4227,7 @@ async function doForgotPassword() {
     await fbPasswordReset(email);
     msg.innerHTML = '<span class="form-success">✓ If an account exists, a reset link has been sent.</span>';
   } catch(e) {
-    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)}</span>`;
+    msg.innerHTML = `<span class="form-error">${fbErrorMsg(e.code)} [${e.code||e.message||'?'}]</span>`;
   } finally {
     if (btn) btn.disabled = false;
   }
