@@ -3624,11 +3624,26 @@ function init() {
   document.addEventListener('click', () => SoundEngine.unlock(), { once: true });
   document.addEventListener('keydown', () => SoundEngine.unlock(), { once: true });
 
-  // Init Firebase auth listener (handles session restore)
-  initFirebaseAuthListener();
-
-  // Show page (auth state will update nav once Firebase resolves)
+  // Show page immediately
   showPage('home');
+
+  // Init Firebase auth listener after a short delay to ensure SDK is ready
+  if (typeof firebase !== 'undefined') {
+    initFirebaseAuthListener();
+  } else {
+    // Wait for Firebase SDK to load from CDN
+    let attempts = 0;
+    const waitForFirebase = setInterval(() => {
+      attempts++;
+      if (typeof firebase !== 'undefined') {
+        clearInterval(waitForFirebase);
+        initFirebaseAuthListener();
+      } else if (attempts > 20) {
+        clearInterval(waitForFirebase);
+        console.warn('Firebase SDK did not load after 10s. Auth will not work offline.');
+      }
+    }, 500);
+  }
 }
 
 init();
@@ -3902,11 +3917,15 @@ const SoundEngine = (() => {
 // ═══════════════════════════════════════════════════════════════════════
 
 // Single Firebase app init — safe against duplicate initialization
-let _fbApp = null, _fbAuth = null, _fbDb = null;
+var _fbApp = null, _fbAuth = null, _fbDb = null;
 
 function getFirebaseApp() {
   if (_fbApp) return _fbApp;
   try {
+    if (typeof firebase === 'undefined') {
+      console.error('Firebase SDK not loaded yet');
+      return null;
+    }
     if (firebase.apps && firebase.apps.length > 0) {
       _fbApp = firebase.apps[0];
     } else {
@@ -3921,8 +3940,13 @@ function getAuth() {
   if (_fbAuth) return _fbAuth;
   const app = getFirebaseApp();
   if (!app) return null;
-  _fbAuth = firebase.auth(app);
-  _fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  try {
+    _fbAuth = firebase.auth(app);
+    _fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  } catch(e) {
+    console.error('getAuth error:', e);
+    return null;
+  }
   return _fbAuth;
 }
 function getDb() {
@@ -4042,8 +4066,9 @@ async function saveProfileField(uid, fields) {
 
 // ── REGISTER WITH EMAIL ──
 async function fbRegister(email, password, username) {
+  if (typeof firebase === 'undefined') throw new Error('Firebase SDK failed to load. Check your internet connection.');
   const auth = getAuth();
-  if (!auth) throw new Error('Firebase not initialized');
+  if (!auth) throw new Error('Firebase Auth not initialized. Check Firebase Console setup.');
   const cred = await auth.createUserWithEmailAndPassword(email, password);
   const fbUser = cred.user;
   // Set display name
@@ -4075,8 +4100,9 @@ async function fbRegister(email, password, username) {
 
 // ── LOGIN ──
 async function fbLogin(email, password) {
+  if (typeof firebase === 'undefined') throw new Error('Firebase SDK failed to load. Check your internet connection.');
   const auth = getAuth();
-  if (!auth) throw new Error('Firebase not initialized');
+  if (!auth) throw new Error('Firebase Auth not initialized. Check Firebase Console setup.');
   const cred = await auth.signInWithEmailAndPassword(email, password);
   return cred.user;
 }
