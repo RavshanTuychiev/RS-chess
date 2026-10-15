@@ -1075,9 +1075,6 @@ footer {
 #forgot-page { background: radial-gradient(ellipse at center, #111c2d 0%, var(--bg-deepest) 70%); }
 
 </style>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -1869,6 +1866,9 @@ footer {
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
 // RS.CHESS — CLIENT APPLICATION
@@ -3627,26 +3627,24 @@ function init() {
   // Show page immediately
   showPage('home');
 
-  // Init Firebase auth listener after a short delay to ensure SDK is ready
+  // Init Firebase - scripts are loaded synchronously above so firebase should exist
   if (typeof firebase !== 'undefined') {
-    initFirebaseAuthListener();
+    try {
+      initFirebaseAuthListener();
+    } catch(e) {
+      console.error('Firebase auth listener error:', e);
+    }
   } else {
-    // Wait for Firebase SDK to load from CDN
-    let attempts = 0;
-    const waitForFirebase = setInterval(() => {
-      attempts++;
-      if (typeof firebase !== 'undefined') {
-        clearInterval(waitForFirebase);
-        initFirebaseAuthListener();
-      } else if (attempts > 20) {
-        clearInterval(waitForFirebase);
-        console.warn('Firebase SDK did not load after 10s. Auth will not work offline.');
-      }
-    }, 500);
+    console.warn('Firebase SDK not available');
   }
 }
 
-init();
+// Run after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDP1Sj2oUD-LmPk99xT0JO6jq3XGwJ_v9U",
   authDomain: "rs-chess-29ab7.firebaseapp.com",
