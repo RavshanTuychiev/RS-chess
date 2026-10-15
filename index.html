@@ -4644,11 +4644,28 @@ function handleNotifClick(id) {
   const n = APP.notifications.find(n => String(n.id) === String(id));
   if (!n) return;
   n.read = true;
-  if (n.type === 'friend_request') showPage('friends');
-  else if (n.type === 'challenge') showPage('play');
-  else if (n.type === 'tournament') showPage('tournaments');
   document.getElementById('notif-dropdown')?.classList.remove('open');
   updateNotifUI();
+  if (n.type === 'friend_request') { showPage('friends'); return; }
+  if (n.type === 'tournament') { showPage('tournaments'); return; }
+  if (n.type === 'challenge') {
+    // Re-check Firestore for a pending challenge to this user
+    const db = getDb();
+    if (!db || !APP.user?.uid) { showPage('play'); return; }
+    db.collection('challenges')
+      .where('to', '==', APP.user.uid)
+      .where('status', '==', 'pending')
+      .limit(1).get().then(snap => {
+        if (!snap.empty) {
+          const doc = snap.docs[0];
+          showChallengeInvite(doc.id, doc.data());
+        } else {
+          showPage('play');
+        }
+      }).catch(() => showPage('play'));
+    return;
+  }
+  showPage('play');
 }
 
 function timeAgo(date) {
@@ -4904,7 +4921,7 @@ async function sendChallenge() {
   const db = getDb();
   if (!db) return;
   try {
-    await db.collection('challenges').add({
+    const docRef = await db.collection('challenges').add({
       from: APP.user.uid,
       fromUsername: APP.user.username,
       to: APP.challengeTarget.uid,
@@ -4912,11 +4929,37 @@ async function sendChallenge() {
       tc: APP.challengeTC,
       status: 'pending',
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 min expiry
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     });
-    showToast(`Challenge sent to ${APP.challengeTarget.username}!`, 'success');
+    showToast(`Challenge sent to ${APP.challengeTarget.username}! Waiting for response…`, 'success');
     closeChallengeModal();
     addNotification('challenge', `Challenge sent to ${APP.challengeTarget.username} (${APP.challengeTC})`);
+
+    // Listen for acceptance — start game on challenger's side
+    const unsub = db.collection('challenges').doc(docRef.id)
+      .onSnapshot(snap => {
+        if (!snap.exists) return;
+        const data = snap.data();
+        if (data.status === 'accepted') {
+          unsub();
+          showToast(`${APP.challengeTarget?.username || 'Opponent'} accepted! Starting game…`, 'success');
+          APP.selectedTC = APP.challengeTC;
+          // Find the game where we are white
+          db.collection('games')
+            .where('whiteUid', '==', APP.user.uid)
+            .where('blackUid', '==', data.to)
+            .orderBy('createdAt', 'desc')
+            .limit(1).get().then(gameSnap => {
+              if (!gameSnap.empty) {
+                joinFirestoreGame(gameSnap.docs[0].id, 'w');
+              }
+            }).catch(() => {});
+        } else if (data.status === 'declined') {
+          unsub();
+          showToast(`${APP.challengeTarget?.username || 'Opponent'} declined the challenge`, 'info');
+        }
+      });
+    APP.unsubscribes.push(unsub);
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
 
@@ -4940,9 +4983,93 @@ function listenForChallenges() {
   APP.unsubscribes.push(unsub);
 }
 
+// Track current incoming challenge
+APP.incomingChallenge = null;
+APP.challengeExpireTimer = null;
+
 function showChallengeInvite(reqId, data) {
+  // Don't show if already handling one
+  if (APP.incomingChallenge) return;
+  APP.incomingChallenge = { reqId, ...data };
+
+  // Update popup
+  document.getElementById('ic-from-name').textContent = data.fromUsername || 'Player';
+  document.getElementById('ic-tc-display').textContent = data.tc || '5+0';
+
+  // Show popup
+  document.getElementById('incoming-challenge-modal').classList.add('active');
+
+  // Countdown timer 60s
+  let secs = 60;
+  document.getElementById('ic-expires').textContent = `Expires in ${secs}s`;
+  clearInterval(APP.challengeExpireTimer);
+  APP.challengeExpireTimer = setInterval(() => {
+    secs--;
+    const el = document.getElementById('ic-expires');
+    if (el) el.textContent = `Expires in ${secs}s`;
+    if (secs <= 0) {
+      clearInterval(APP.challengeExpireTimer);
+      closeIncomingChallenge();
+      showToast('Challenge expired', 'info');
+    }
+  }, 1000);
+
   addNotification('challenge', `${data.fromUsername} challenged you to a ${data.tc} game!`, { reqId });
-  showToast(`⚔ ${data.fromUsername} wants to play ${data.tc}!`, 'info');
+  SoundEngine.check(); // use check sound as notification sound
+}
+
+function closeIncomingChallenge() {
+  clearInterval(APP.challengeExpireTimer);
+  APP.incomingChallenge = null;
+  document.getElementById('incoming-challenge-modal').classList.remove('active');
+}
+
+function declineIncomingChallenge() {
+  if (!APP.incomingChallenge) return;
+  const db = getDb();
+  if (db && APP.incomingChallenge.reqId) {
+    db.collection('challenges').doc(APP.incomingChallenge.reqId)
+      .update({ status: 'declined' }).catch(() => {});
+  }
+  closeIncomingChallenge();
+  showToast('Challenge declined', 'info');
+}
+
+async function acceptIncomingChallenge() {
+  if (!APP.incomingChallenge || !APP.user?.uid) return;
+  const ch = APP.incomingChallenge;
+  closeIncomingChallenge();
+
+  const db = getDb();
+  if (!db) return;
+
+  // Mark challenge as accepted
+  if (ch.reqId) {
+    await db.collection('challenges').doc(ch.reqId)
+      .update({ status: 'accepted' }).catch(() => {});
+  }
+
+  // Set TC and start online game
+  APP.selectedTC = ch.tc || '5+0';
+
+  // Determine colors: challenger = white, acceptor = black
+  showPage('play');
+
+  // Create game with challenger as white, acceptor (us) as black
+  try {
+    const gameRef = await createFirestoreGame(ch.from, APP.user.uid, APP.user.username, APP.selectedTC);
+    // Override: challenger is white, we are black
+    await db.collection('games').doc(gameRef.id).update({
+      whiteUid: ch.from,
+      whiteUsername: ch.fromUsername,
+      blackUid: APP.user.uid,
+      blackUsername: APP.user.username,
+    });
+    joinFirestoreGame(gameRef.id, 'b');
+    showToast(`Game started vs ${ch.fromUsername}!`, 'success');
+  } catch(e) {
+    showToast('Error starting game: ' + e.message, 'error');
+  }
 }
 
 // ── PRESENCE SYSTEM ────────────────────────────────────────────────────
@@ -5909,5 +6036,22 @@ setTimeout(refreshCoursesIfNeeded, 100);
   </div>
 </div>
 
+
+<!-- INCOMING CHALLENGE POPUP -->
+<div class="modal-overlay" id="incoming-challenge-modal">
+  <div class="modal-box" style="max-width:380px">
+    <div style="font-size:3rem;margin-bottom:12px">⚔</div>
+    <div style="font-size:1.3rem;font-weight:700;margin-bottom:6px">Challenge Received!</div>
+    <div style="color:var(--text-secondary);margin-bottom:4px">
+      <span style="font-weight:600;color:var(--text-primary)" id="ic-from-name">Player</span> wants to play
+    </div>
+    <div style="font-size:1.1rem;font-weight:700;color:var(--accent-teal);margin:12px 0" id="ic-tc-display">5+0 Blitz</div>
+    <div style="color:var(--text-muted);font-size:0.78rem;margin-bottom:20px" id="ic-expires">Expires in 60s</div>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button class="btn btn-outline btn-lg" onclick="declineIncomingChallenge()">Decline</button>
+      <button class="btn btn-primary btn-lg" onclick="acceptIncomingChallenge()">Accept ⚔</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
