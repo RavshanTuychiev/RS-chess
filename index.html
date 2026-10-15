@@ -1074,6 +1074,212 @@ footer {
 /* Forgot password page */
 #forgot-page { background: radial-gradient(ellipse at center, #111c2d 0%, var(--bg-deepest) 70%); }
 
+
+/* ═══ UPGRADE: TOURNAMENTS, FRIENDS, NOTIFICATIONS, ENHANCED UI ═══ */
+
+/* Notification bell */
+.notif-bell {
+  position: relative; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.15s;
+}
+.notif-bell:hover { border-color: var(--accent-teal); }
+.notif-count {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--accent-red); color: white;
+  font-size: 0.6rem; font-weight: 700;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--bg-deepest);
+}
+
+/* Notification dropdown */
+.notif-dropdown {
+  position: absolute; top: calc(var(--nav-height) + 4px); right: 16px;
+  width: 340px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card); z-index: 500;
+  display: none; overflow: hidden;
+}
+.notif-dropdown.open { display: block; }
+.notif-header {
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700; font-size: 0.9rem;
+}
+.notif-item {
+  padding: 12px 16px; border-bottom: 1px solid rgba(30,48,80,0.4);
+  display: flex; gap: 10px; align-items: flex-start;
+  cursor: pointer; transition: background 0.1s;
+}
+.notif-item:hover { background: var(--bg-elevated); }
+.notif-item.unread { background: rgba(0,201,167,0.05); }
+.notif-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.notif-text { font-size: 0.82rem; line-height: 1.5; }
+.notif-time { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
+.notif-empty { padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+
+/* Friends page */
+#friends-page { background: var(--bg-deepest); }
+.friends-layout {
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: 20px; padding: 24px;
+  max-width: 1200px; margin: 0 auto;
+}
+@media(max-width:900px){ .friends-layout { grid-template-columns: 1fr; } }
+
+.friend-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; border-radius: var(--radius-md);
+  border: 1px solid var(--border); margin-bottom: 8px;
+  background: var(--bg-card); transition: all 0.15s;
+}
+.friend-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
+.presence-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--bg-deepest);
+}
+.presence-online { background: var(--accent-green); }
+.presence-ingame { background: var(--accent-yellow); }
+.presence-offline { background: var(--text-muted); }
+
+/* Tournaments page */
+#tournaments-page { background: var(--bg-deepest); }
+.tournament-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+  transition: all 0.2s; cursor: pointer;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.tournament-card:hover { border-color: var(--accent-teal); transform: translateY(-2px); box-shadow: var(--shadow-card); }
+.tournament-badge {
+  font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 12px;
+  display: inline-block;
+}
+.tb-open { background: rgba(34,197,94,0.15); color: var(--accent-green); }
+.tb-live { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+.tb-soon { background: rgba(245,158,11,0.15); color: var(--accent-yellow); }
+.tb-done { background: rgba(100,116,139,0.2); color: var(--text-muted); }
+
+.tournament-meta {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.tournament-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* Multiplayer waiting */
+.game-seeking {
+  text-align: center; padding: 60px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.seek-pulse {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(0,201,167,0.1); border: 2px solid var(--accent-teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; animation: seekPulse 2s ease-in-out infinite;
+}
+@keyframes seekPulse {
+  0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,201,167,0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(0,201,167,0); }
+}
+
+/* Enhanced play page */
+.play-status-bar {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.connection-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.conn-good { background: var(--accent-green); }
+.conn-bad { background: var(--accent-red); animation: pulse 1s infinite; }
+.conn-reconnecting { background: var(--accent-yellow); animation: pulse 0.5s infinite; }
+
+/* Enhanced profile */
+.profile-cover {
+  height: 120px;
+  background: linear-gradient(135deg, rgba(0,201,167,0.15) 0%, rgba(59,130,246,0.1) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Search box */
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px 12px;
+  transition: border-color 0.15s;
+}
+.search-box:focus-within { border-color: var(--accent-teal); }
+.search-box input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 0.875rem; flex: 1; }
+.search-box input::placeholder { color: var(--text-muted); }
+
+/* Challenge modal */
+.challenge-modal {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(8,13,20,0.9); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+}
+.challenge-modal.open { display: flex; }
+
+/* Tournament detail page */
+#tournament-detail-page { background: var(--bg-deepest); }
+.standings-table { width: 100%; border-collapse: collapse; }
+.standings-table th, .standings-table td {
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid rgba(30,48,80,0.5);
+  font-size: 0.85rem;
+}
+.standings-table th { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.standings-table tr:hover td { background: var(--bg-elevated); }
+
+/* Tabs */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tab-btn {
+  padding: 10px 18px; font-size: 0.875rem; font-weight: 600;
+  color: var(--text-secondary); cursor: pointer; border: none; background: none;
+  border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--accent-teal); border-bottom-color: var(--accent-teal); }
+
+/* Volume slider */
+.volume-wrap { display: flex; align-items: center; gap: 8px; }
+input[type=range].vol-slider {
+  -webkit-appearance: none; height: 3px; border-radius: 2px;
+  background: var(--border); outline: none; width: 80px;
+}
+input[type=range].vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--accent-teal); cursor: pointer;
+}
+
+/* Online count badge */
+.online-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+  color: var(--accent-green); padding: 3px 8px; border-radius: 12px;
+  font-size: 0.72rem; font-weight: 600;
+}
+
+/* Post-game panel */
+.postgame-panel {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+  display: none;
+}
+.postgame-panel.visible { display: block; }
+
+/* Draw offer banner */
+.draw-offer-banner {
+  background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3);
+  border-radius: var(--radius-md); padding: 10px 14px;
+  display: none; align-items: center; gap: 10px;
+  font-size: 0.85rem; color: var(--accent-yellow);
+}
+.draw-offer-banner.visible { display: flex; }
+
 </style>
 </head>
 <body>
@@ -1096,6 +1302,8 @@ footer {
     <button class="nav-link" id="nav-puzzles" onclick="showPage('puzzles')"><span class="nav-link-icon">🧩</span><span>Puzzles</span></button>
     <button class="nav-link" id="nav-learn" onclick="showPage('learn')"><span class="nav-link-icon">📚</span><span>Learn</span></button>
     <button class="nav-link" id="nav-leaderboard" onclick="showPage('leaderboard')"><span class="nav-link-icon">🏆</span><span>Rankings</span></button>
+    <button class="nav-link" id="nav-tournaments" onclick="showPage('tournaments')"><span class="nav-link-icon">🎯</span><span>Tournaments</span></button>
+    <button class="nav-link" id="nav-friends" onclick="showPage('friends')"><span class="nav-link-icon">👥</span><span>Friends</span></button>
   </div>
   <div class="nav-actions" id="nav-actions">
     <button class="btn btn-ghost btn-sm" onclick="showPage('signin')">Sign In</button>
@@ -1104,6 +1312,24 @@ footer {
   <div class="sound-toggle" onclick="toggleSound();SoundEngine.unlock()" title="Toggle sound" style="margin-left:8px">
     <span class="st-icon">🔊</span><span class="st-label" style="display:none" class="d-md">Sound On</span>
   </div>
+  <div style="position:relative" id="notif-wrap" style="display:none">
+    <div class="notif-bell" id="notif-bell" onclick="toggleNotifications()">
+      🔔
+      <div class="notif-count" id="notif-count-badge" style="display:none">0</div>
+    </div>
+  </div>
+  
+<!-- NOTIFICATIONS DROPDOWN -->
+<div class="notif-dropdown" id="notif-dropdown">
+  <div class="notif-header">
+    <span>Notifications</span>
+    <button class="btn btn-ghost btn-sm" onclick="markAllRead()" style="font-size:0.75rem">Mark all read</button>
+  </div>
+  <div id="notif-list">
+    <div class="notif-empty">No notifications yet</div>
+  </div>
+</div>
+
   <div class="nav-actions" id="nav-user" style="display:none">
     <button class="btn btn-ghost btn-sm" onclick="showPage('profile')" id="nav-username-btn">My Profile</button>
     <button class="btn btn-primary btn-sm" onclick="showPage('play')">Play Now</button>
@@ -3104,7 +3330,7 @@ function renderCoursesByCategory() {
   catMap.forEach((cat, i) => {
     const grid = document.getElementById(gridIds[i]);
     if (!grid) return;
-    const courses = COURSES_DATA.filter(c => c.category === cat);
+    const courses = COURSES_DATA.filter(c => c.category === cat || (cat === 'tactics' && c.category === 'middlegame'));
     grid.innerHTML = courses.map(c => courseCardHtml(c)).join('');
   });
 }
@@ -3587,6 +3813,8 @@ function loginUser(userData) {
   document.getElementById('nav-actions').style.display = 'none';
   document.getElementById('nav-user').style.display = 'flex';
   document.getElementById('nav-username-btn').textContent = userData.username;
+  const notifWrap = document.getElementById('notif-wrap');
+  if (notifWrap) notifWrap.style.display = 'block';
 }
 
 function logoutUser() {
@@ -4314,6 +4542,1207 @@ function onMoveAccepted(moveResult, engineStatus) {
   SoundEngine.playForMove(moveResult, engineStatus);
 }
 
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// RS.CHESS UPGRADE — TOURNAMENTS, FRIENDS, NOTIFICATIONS, MULTIPLAYER
+// ═══════════════════════════════════════════════════════════════════════
+
+// ── EXTENDED APP STATE ──
+APP.notifications = [];
+APP.friends = [];
+APP.friendRequests = [];
+APP.challengeTarget = null;
+APP.challengeTC = '5+0';
+APP.currentTournament = null;
+APP.tourneyTab = 'open';
+APP.unsubscribes = []; // Firestore listeners to clean up
+APP.presence = {};     // uid -> status
+APP.onlineCount = 0;
+
+// ── VOLUME CONTROL ──
+SoundEngine.setVolume = function(v) {
+  try { localStorage.setItem('rs_chess_vol', v); } catch(e) {}
+};
+SoundEngine.getVolume = function() {
+  try { return parseFloat(localStorage.getItem('rs_chess_vol') || '1'); } catch(e) { return 1; }
+};
+
+// ── NOTIFICATIONS ──────────────────────────────────────────────────────
+function addNotification(type, text, data = {}) {
+  const n = {
+    id: Date.now() + Math.random(),
+    type, text, data,
+    time: new Date(),
+    read: false,
+  };
+  APP.notifications.unshift(n);
+  updateNotifUI();
+  // Save to Firestore if signed in
+  if (APP.user?.uid) {
+    const db = getDb();
+    if (db) {
+      db.collection('users').doc(APP.user.uid)
+        .collection('notifications').add({
+          type, text, data,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          read: false,
+        }).catch(() => {});
+    }
+  }
+}
+
+function updateNotifUI() {
+  const unread = APP.notifications.filter(n => !n.read).length;
+  const countEl = document.getElementById('notif-count-badge');
+  if (countEl) {
+    countEl.textContent = unread > 0 ? (unread > 9 ? '9+' : unread) : '';
+    countEl.style.display = unread > 0 ? 'flex' : 'none';
+  }
+  renderNotifList();
+}
+
+function renderNotifList() {
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  if (!APP.notifications.length) {
+    list.innerHTML = '<div class="notif-empty">No notifications yet</div>';
+    return;
+  }
+  const icons = { friend_request:'👥', friend_accept:'✅', challenge:'⚔', game_start:'♟', tournament:'🏆', system:'ℹ' };
+  list.innerHTML = APP.notifications.slice(0,15).map(n => `
+    <div class="notif-item ${n.read ? '' : 'unread'}" onclick="handleNotifClick('${n.id}')">
+      <div class="notif-icon">${icons[n.type] || 'ℹ'}</div>
+      <div>
+        <div class="notif-text">${n.text}</div>
+        <div class="notif-time">${timeAgo(n.time)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleNotifications() {
+  const dd = document.getElementById('notif-dropdown');
+  if (!dd) return;
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    // Mark as read after viewing
+    setTimeout(() => {
+      APP.notifications.forEach(n => n.read = true);
+      updateNotifUI();
+    }, 2000);
+  }
+}
+
+function markAllRead() {
+  APP.notifications.forEach(n => n.read = true);
+  updateNotifUI();
+  document.getElementById('notif-dropdown')?.classList.remove('open');
+}
+
+function handleNotifClick(id) {
+  const n = APP.notifications.find(n => String(n.id) === String(id));
+  if (!n) return;
+  n.read = true;
+  if (n.type === 'friend_request') showPage('friends');
+  else if (n.type === 'challenge') showPage('play');
+  else if (n.type === 'tournament') showPage('tournaments');
+  document.getElementById('notif-dropdown')?.classList.remove('open');
+  updateNotifUI();
+}
+
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  return Math.floor(s/86400) + 'd ago';
+}
+
+// Close notifications when clicking outside
+document.addEventListener('click', e => {
+  const dd = document.getElementById('notif-dropdown');
+  const bell = document.getElementById('notif-bell');
+  if (dd && bell && !dd.contains(e.target) && !bell.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+
+// ── FRIENDS SYSTEM ─────────────────────────────────────────────────────
+function initFriendsPage() {
+  if (!APP.user?.uid) {
+    document.getElementById('friends-list').innerHTML = `
+      <div style="text-align:center;padding:40px;color:var(--text-muted)">
+        <div style="font-size:2rem;margin-bottom:12px">🔒</div>
+        <div>Sign in to use the friends system</div>
+        <button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="showPage('signin')">Sign In</button>
+      </div>`;
+    return;
+  }
+  loadFriends();
+  loadFriendRequests();
+}
+
+async function loadFriends() {
+  const db = getDb();
+  if (!db || !APP.user?.uid) return;
+  try {
+    const snap = await db.collection('users').doc(APP.user.uid)
+      .collection('friends').get();
+    APP.friends = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderFriendsList();
+  } catch(e) { console.error('loadFriends:', e); }
+}
+
+async function loadFriendRequests() {
+  const db = getDb();
+  if (!db || !APP.user?.uid) return;
+  try {
+    const snap = await db.collection('friendRequests')
+      .where('to', '==', APP.user.uid)
+      .where('status', '==', 'pending').get();
+    APP.friendRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderFriendRequests();
+    const countEl = document.getElementById('req-count');
+    if (countEl) countEl.textContent = APP.friendRequests.length > 0 ? `(${APP.friendRequests.length})` : '';
+  } catch(e) { console.error('loadFriendRequests:', e); }
+}
+
+function renderFriendsList() {
+  const list = document.getElementById('friends-list');
+  if (!list) return;
+  const countEl = document.getElementById('friends-count');
+  if (countEl) countEl.textContent = `(${APP.friends.length})`;
+
+  if (!APP.friends.length) {
+    list.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:40px;font-size:0.875rem">No friends yet. Search for players to add them! 👆</div>';
+    return;
+  }
+
+  const online = APP.friends.filter(f => APP.presence[f.friendUid] === 'online').length;
+  const onlineEl = document.getElementById('online-friends-count');
+  if (onlineEl) onlineEl.textContent = online;
+
+  list.innerHTML = APP.friends.map(f => {
+    const status = APP.presence[f.friendUid] || 'offline';
+    const dotClass = status === 'online' ? 'presence-online' : status === 'ingame' ? 'presence-ingame' : 'presence-offline';
+    const statusLabel = status === 'online' ? 'Online' : status === 'ingame' ? 'In game' : 'Offline';
+    return `<div class="friend-item">
+      <div class="player-avatar" style="width:40px;height:40px;font-size:1rem;flex-shrink:0">${(f.username||'?')[0].toUpperCase()}</div>
+      <div class="presence-dot ${dotClass}"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:0.9rem">${escHtml(f.username||'Unknown')}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted)">${statusLabel} · ${f.rapidRating||'—'} Rapid</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-sm btn-primary" onclick="openChallengeModal('${f.friendUid}','${escHtml(f.username||'Friend')}')">⚔</button>
+        <button class="btn btn-sm btn-outline" onclick="removeFriend('${f.friendUid}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderFriendRequests() {
+  const list = document.getElementById('friend-requests-list');
+  if (!list) return;
+  if (!APP.friendRequests.length) {
+    list.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:12px">No pending requests</div>';
+    return;
+  }
+  list.innerHTML = APP.friendRequests.map(r => `
+    <div class="friend-item">
+      <div class="player-avatar" style="width:36px;height:36px;font-size:0.9rem;flex-shrink:0">${(r.fromUsername||'?')[0].toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:0.85rem">${escHtml(r.fromUsername||'Unknown')}</div>
+        <div style="font-size:0.72rem;color:var(--text-muted)">wants to be friends</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-sm btn-green" onclick="acceptFriendRequest('${r.id}','${r.from}','${escHtml(r.fromUsername||'')}')">✓</button>
+        <button class="btn btn-sm btn-outline" onclick="declineFriendRequest('${r.id}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+let searchTimeout = null;
+function searchPlayers(q) {
+  clearTimeout(searchTimeout);
+  const res = document.getElementById('player-search-results');
+  if (!q || q.length < 2) {
+    res.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:16px">Type at least 2 characters</div>';
+    return;
+  }
+  res.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:12px">Searching…</div>';
+  searchTimeout = setTimeout(async () => {
+    const db = getDb();
+    if (!db) { res.innerHTML = '<div style="color:var(--accent-red);font-size:0.8rem;padding:12px">Sign in to search players</div>'; return; }
+    try {
+      const qLower = q.toLowerCase();
+      const snap = await db.collection('users')
+        .where('username', '>=', q)
+        .where('username', '<=', q + '\uf8ff')
+        .limit(10).get();
+      if (snap.empty) {
+        res.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:16px">No players found</div>';
+        return;
+      }
+      res.innerHTML = snap.docs
+        .filter(d => d.id !== APP.user?.uid)
+        .map(d => {
+          const data = d.data();
+          const isFriend = APP.friends.some(f => f.friendUid === d.id);
+          return `<div class="friend-item" style="margin-bottom:6px">
+            <div class="player-avatar" style="width:34px;height:34px;font-size:0.85rem;flex-shrink:0">${(data.username||'?')[0].toUpperCase()}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:600;font-size:0.85rem">${escHtml(data.username||'Unknown')}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted)">${data.rapidRating||800} Rapid</div>
+            </div>
+            ${isFriend
+              ? '<span style="font-size:0.75rem;color:var(--accent-green)">✓ Friends</span>'
+              : `<button class="btn btn-sm btn-primary" onclick="sendFriendRequest('${d.id}','${escHtml(data.username||'')}')">+ Add</button>`
+            }
+          </div>`;
+        }).join('') || '<div style="color:var(--text-muted);font-size:0.8rem;padding:12px">No results</div>';
+    } catch(e) {
+      res.innerHTML = `<div style="color:var(--accent-red);font-size:0.8rem;padding:12px">Error: ${e.message}</div>`;
+    }
+  }, 400);
+}
+
+async function sendFriendRequest(toUid, toUsername) {
+  if (!APP.user?.uid) { showToast('Sign in to send friend requests', 'error'); return; }
+  if (toUid === APP.user.uid) { showToast("Can't add yourself", 'error'); return; }
+  const db = getDb();
+  if (!db) return;
+  try {
+    // Check not already sent
+    const existing = await db.collection('friendRequests')
+      .where('from', '==', APP.user.uid)
+      .where('to', '==', toUid).get();
+    if (!existing.empty) { showToast('Request already sent', 'info'); return; }
+    await db.collection('friendRequests').add({
+      from: APP.user.uid,
+      fromUsername: APP.user.username,
+      to: toUid,
+      toUsername: toUsername,
+      status: 'pending',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    showToast(`Friend request sent to ${toUsername}!`, 'success');
+    document.getElementById('player-search-input').value = '';
+    document.getElementById('player-search-results').innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:16px">Type to search players</div>';
+  } catch(e) { showToast('Failed to send request: ' + e.message, 'error'); }
+}
+
+async function acceptFriendRequest(reqId, fromUid, fromUsername) {
+  if (!APP.user?.uid) return;
+  const db = getDb();
+  if (!db) return;
+  try {
+    const batch = db.batch();
+    // Update request
+    batch.update(db.collection('friendRequests').doc(reqId), { status: 'accepted' });
+    // Add to both friends subcollections
+    batch.set(db.collection('users').doc(APP.user.uid).collection('friends').doc(fromUid), {
+      friendUid: fromUid, username: fromUsername,
+      addedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      rapidRating: 800,
+    });
+    batch.set(db.collection('users').doc(fromUid).collection('friends').doc(APP.user.uid), {
+      friendUid: APP.user.uid, username: APP.user.username,
+      addedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      rapidRating: APP.user.rapidRating || 800,
+    });
+    await batch.commit();
+    showToast(`${fromUsername} is now your friend!`, 'success');
+    loadFriends();
+    loadFriendRequests();
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+async function declineFriendRequest(reqId) {
+  const db = getDb();
+  if (!db) return;
+  try {
+    await db.collection('friendRequests').doc(reqId).update({ status: 'declined' });
+    loadFriendRequests();
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+async function removeFriend(friendUid) {
+  if (!APP.user?.uid || !confirm('Remove this friend?')) return;
+  const db = getDb();
+  if (!db) return;
+  try {
+    await db.collection('users').doc(APP.user.uid).collection('friends').doc(friendUid).delete();
+    APP.friends = APP.friends.filter(f => f.friendUid !== friendUid);
+    renderFriendsList();
+    showToast('Friend removed', 'info');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+// ── CHALLENGE SYSTEM ───────────────────────────────────────────────────
+function openChallengeModal(uid, username) {
+  APP.challengeTarget = { uid, username };
+  document.getElementById('challenge-target-name').textContent = `Challenge ${username}`;
+  document.getElementById('challenge-modal').classList.add('open');
+}
+
+function closeChallengeModal() {
+  document.getElementById('challenge-modal').classList.remove('open');
+  APP.challengeTarget = null;
+}
+
+function selectChallengeTC(el, tc) {
+  document.querySelectorAll('#challenge-modal .tc-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  APP.challengeTC = tc;
+}
+
+async function sendChallenge() {
+  if (!APP.user?.uid || !APP.challengeTarget) return;
+  const db = getDb();
+  if (!db) return;
+  try {
+    await db.collection('challenges').add({
+      from: APP.user.uid,
+      fromUsername: APP.user.username,
+      to: APP.challengeTarget.uid,
+      toUsername: APP.challengeTarget.username,
+      tc: APP.challengeTC,
+      status: 'pending',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 min expiry
+    });
+    showToast(`Challenge sent to ${APP.challengeTarget.username}!`, 'success');
+    closeChallengeModal();
+    addNotification('challenge', `Challenge sent to ${APP.challengeTarget.username} (${APP.challengeTC})`);
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+// Listen for incoming challenges
+function listenForChallenges() {
+  if (!APP.user?.uid) return;
+  const db = getDb();
+  if (!db) return;
+  const unsub = db.collection('challenges')
+    .where('to', '==', APP.user.uid)
+    .where('status', '==', 'pending')
+    .onSnapshot(snap => {
+      snap.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          const data = change.doc.data();
+          const reqId = change.doc.id;
+          showChallengeInvite(reqId, data);
+        }
+      });
+    }, () => {});
+  APP.unsubscribes.push(unsub);
+}
+
+function showChallengeInvite(reqId, data) {
+  addNotification('challenge', `${data.fromUsername} challenged you to a ${data.tc} game!`, { reqId });
+  showToast(`⚔ ${data.fromUsername} wants to play ${data.tc}!`, 'info');
+}
+
+// ── PRESENCE SYSTEM ────────────────────────────────────────────────────
+function updatePresence(status = 'online') {
+  if (!APP.user?.uid) return;
+  const db = getDb();
+  if (!db) return;
+  db.collection('presence').doc(APP.user.uid).set({
+    uid: APP.user.uid,
+    username: APP.user.username,
+    status: status,
+    lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true }).catch(() => {});
+}
+
+function listenToFriendsPresence() {
+  if (!APP.user?.uid || !APP.friends.length) return;
+  const db = getDb();
+  if (!db) return;
+  const uids = APP.friends.map(f => f.friendUid).slice(0, 10);
+  if (!uids.length) return;
+  const unsub = db.collection('presence')
+    .where('uid', 'in', uids)
+    .onSnapshot(snap => {
+      snap.docs.forEach(d => {
+        APP.presence[d.id] = d.data().status || 'offline';
+      });
+      renderFriendsList();
+    }, () => {});
+  APP.unsubscribes.push(unsub);
+}
+
+// Update presence on visibility change
+document.addEventListener('visibilitychange', () => {
+  updatePresence(document.hidden ? 'away' : 'online');
+});
+
+// Set offline on unload
+window.addEventListener('beforeunload', () => {
+  updatePresence('offline');
+});
+
+// ── TOURNAMENTS ────────────────────────────────────────────────────────
+const DEMO_TOURNAMENTS = [
+  {
+    id: 't1', name: 'RS.chess Weekly Blitz', format: 'Swiss', tc: '5+0',
+    status: 'open', startTime: new Date(Date.now() + 2*60*60*1000),
+    participants: 12, maxParticipants: 32, rounds: 7,
+    desc: 'A friendly weekly blitz tournament open to all ratings. Swiss format, 7 rounds.',
+    rated: true, prize: 'Rating points + Trophy',
+  },
+  {
+    id: 't2', name: 'Rapid Championship', format: 'Swiss', tc: '10+5',
+    status: 'live', startTime: new Date(Date.now() - 30*60*1000),
+    participants: 16, maxParticipants: 16, rounds: 5, currentRound: 3,
+    desc: 'Monthly rapid championship. 16 players, 5 rounds of Swiss.',
+    rated: true, prize: 'Champion badge',
+  },
+  {
+    id: 't3', name: 'Beginner Friendly Cup', format: 'Round Robin', tc: '15+10',
+    status: 'open', startTime: new Date(Date.now() + 24*60*60*1000),
+    participants: 5, maxParticipants: 8, rounds: 7,
+    desc: 'For players under 1200. Round robin format. Perfect for learning competitive play.',
+    rated: false, prize: 'Fun experience',
+    ratingLimit: 1200,
+  },
+  {
+    id: 't4', name: 'Bullet Madness', format: 'Swiss', tc: '1+0',
+    status: 'soon', startTime: new Date(Date.now() + 4*60*60*1000),
+    participants: 8, maxParticipants: 64, rounds: 9,
+    desc: 'Pure bullet chess. 1 minute, no increment. Fast decisions win.',
+    rated: true, prize: 'Rating points',
+  },
+  {
+    id: 't5', name: 'April Rapid Open', format: 'Swiss', tc: '10+0',
+    status: 'finished', startTime: new Date(Date.now() - 7*24*60*60*1000),
+    participants: 24, maxParticipants: 32, rounds: 6, currentRound: 6,
+    desc: 'Completed tournament. Congratulations to all participants!',
+    rated: true, winner: 'Saidolim',
+  },
+];
+
+function initTournamentsPage() {
+  renderTournaments(APP.tourneyTab);
+  if (APP.user?.uid) {
+    document.getElementById('create-tourney-btn').style.display = 'block';
+  }
+}
+
+function switchTourneyTab(tab, btn) {
+  APP.tourneyTab = tab;
+  document.querySelectorAll('#tournaments-page .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTournaments(tab);
+}
+
+function renderTournaments(tab) {
+  const grid = document.getElementById('tournaments-grid');
+  if (!grid) return;
+  const filtered = DEMO_TOURNAMENTS.filter(t => {
+    if (tab === 'open') return t.status === 'open' || t.status === 'soon';
+    if (tab === 'live') return t.status === 'live';
+    if (tab === 'finished') return t.status === 'finished';
+    return true;
+  });
+  if (!filtered.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">No tournaments in this category</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(t => tournamentCardHtml(t)).join('');
+}
+
+function tournamentCardHtml(t) {
+  const statusMap = { open:'tb-open', live:'tb-live', soon:'tb-soon', finished:'tb-done' };
+  const statusLabel = { open:'Registration Open', live:'🔴 Live', soon:'Starting Soon', finished:'Finished' };
+  const timeLabel = t.status === 'finished'
+    ? 'Ended ' + timeAgo(t.startTime)
+    : t.status === 'live'
+    ? 'Started ' + timeAgo(t.startTime)
+    : 'Starts in ' + formatCountdown(t.startTime);
+  return `<div class="tournament-card" onclick="openTournament('${t.id}')">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+      <div style="font-weight:700;font-size:1rem">${escHtml(t.name)}</div>
+      <span class="tournament-badge ${statusMap[t.status]}">${statusLabel[t.status]}</span>
+    </div>
+    <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.5">${escHtml(t.desc.slice(0,80))}…</div>
+    <div class="tournament-meta">
+      <span>⚡ ${t.tc}</span>
+      <span>📋 ${t.format}</span>
+      <span>👥 ${t.participants}/${t.maxParticipants}</span>
+      <span>🔄 ${t.rounds} rounds</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:0.78rem;color:var(--text-muted)">⏰ ${timeLabel}</span>
+      ${t.status === 'open' || t.status === 'soon'
+        ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();joinTournament('${t.id}')">Join</button>`
+        : t.status === 'live'
+        ? `<button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--accent-red);border:1px solid rgba(239,68,68,0.2)" onclick="event.stopPropagation();openTournament('${t.id}')">Watch Live</button>`
+        : `<span style="font-size:0.78rem;color:var(--accent-green)">🏆 ${t.winner || 'Completed'}</span>`
+      }
+    </div>
+  </div>`;
+}
+
+function formatCountdown(date) {
+  const diff = Math.max(0, new Date(date) - Date.now());
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
+function joinTournament(id) {
+  if (!APP.user?.uid) { showToast('Sign in to join tournaments', 'error'); showPage('signin'); return; }
+  const t = DEMO_TOURNAMENTS.find(t => t.id === id);
+  if (!t) return;
+  if (t.participants >= t.maxParticipants) { showToast('Tournament is full', 'error'); return; }
+  t.participants++;
+  showToast(`Joined "${t.name}"! You'll be notified when it starts.`, 'success');
+  addNotification('tournament', `You registered for ${t.name}`);
+  renderTournaments(APP.tourneyTab);
+}
+
+function openTournament(id) {
+  const t = DEMO_TOURNAMENTS.find(t => t.id === id);
+  if (!t) return;
+  APP.currentTournament = t;
+  showPage('tournament-detail');
+  populateTournamentDetail(t);
+}
+
+function populateTournamentDetail(t) {
+  document.getElementById('td-title').textContent = t.name;
+  document.getElementById('td-desc').textContent = t.desc;
+  const statusMap = { open:'tb-open', live:'tb-live', soon:'tb-soon', finished:'tb-done' };
+  const statusLabel = { open:'Registration Open', live:'Live Now', soon:'Starting Soon', finished:'Finished' };
+  document.getElementById('td-meta').innerHTML = `
+    <span><span class="tournament-badge ${statusMap[t.status]}">${statusLabel[t.status]}</span></span>
+    <span>⚡ ${t.tc}</span><span>📋 ${t.format}</span>
+    <span>🔄 ${t.rounds} rounds</span><span>👥 ${t.participants}/${t.maxParticipants} players</span>
+    ${t.rated ? '<span style="color:var(--accent-teal)">📊 Rated</span>' : '<span style="color:var(--text-muted)">Unrated</span>'}
+  `;
+  const actionWrap = document.getElementById('td-action-wrap');
+  if (t.status === 'open' || t.status === 'soon') {
+    actionWrap.innerHTML = `<button class="btn btn-primary btn-lg" onclick="joinTournament('${t.id}')">Join Tournament</button>`;
+  } else if (t.status === 'live') {
+    actionWrap.innerHTML = `<button class="btn btn-primary btn-lg" style="background:var(--accent-red)" onclick="showToast('Live pairing coming soon!','info')">🔴 View Live Games</button>`;
+  } else {
+    actionWrap.innerHTML = '';
+  }
+  document.getElementById('td-details').innerHTML = `
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Format</span><span>${t.format}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Time Control</span><span>${t.tc}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Rounds</span><span>${t.rounds}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Rated</span><span>${t.rated ? '✅ Yes' : '❌ No'}</span></div>
+    ${t.ratingLimit ? `<div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Rating Limit</span><span>≤ ${t.ratingLimit}</span></div>` : ''}
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted)">Prize</span><span style="color:var(--accent-yellow)">${t.prize||'—'}</span></div>
+  `;
+  // Demo standings
+  const demoPlayers = [
+    {rank:1,name:'Saidolim',pts:4.5,w:4,d:1,l:0},
+    {rank:2,name:'TacticalTiger',pts:4,w:3,d:2,l:0},
+    {rank:3,name:'Ravshanbek',pts:3.5,w:3,d:1,l:1},
+    {rank:4,name:'EndgameExpert',pts:3,w:2,d:2,l:1},
+    {rank:5,name:'OpeningWizard',pts:2.5,w:2,d:1,l:2},
+    {rank:6,name:'KasparovFan',pts:2,w:1,d:2,l:2},
+    {rank:7,name:'PawnPusher99',pts:1.5,w:1,d:1,l:3},
+    {rank:8,name:'NewPlayer',pts:0,w:0,d:0,l:4},
+  ];
+  document.getElementById('td-standings-body').innerHTML = demoPlayers.map(p => `
+    <tr>
+      <td><div class="rank-badge ${p.rank<=3?`rank-${p.rank}`:'rank-other'}" style="width:24px;height:24px;font-size:0.7rem">${p.rank}</div></td>
+      <td style="font-weight:600">${escHtml(p.name)}</td>
+      <td style="font-weight:700;color:var(--accent-teal)">${p.pts}</td>
+      <td style="color:var(--accent-green)">${p.w}</td>
+      <td style="color:var(--text-muted)">${p.d}</td>
+      <td style="color:var(--accent-red)">${p.l}</td>
+    </tr>
+  `).join('');
+  document.getElementById('td-top-players').innerHTML = demoPlayers.slice(0,3).map((p,i) => `
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="font-size:1.2rem">${['🥇','🥈','🥉'][i]}</div>
+      <div style="font-weight:600;font-size:0.85rem">${escHtml(p.name)}</div>
+      <div style="margin-left:auto;font-weight:700;color:var(--accent-teal);font-size:0.85rem">${p.pts}</div>
+    </div>
+  `).join('');
+  document.getElementById('td-rounds-content').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${[1,2,3].map(r => `
+        <div class="card no-hover">
+          <div style="font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+            Round ${r} ${r <= (t.currentRound||0) ? '<span style="color:var(--accent-green);font-size:0.75rem">✓ Complete</span>' : r === (t.currentRound||0)+1 ? '<span style="color:var(--accent-yellow);font-size:0.75rem">▶ In progress</span>' : '<span style="color:var(--text-muted);font-size:0.75rem">Upcoming</span>'}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            ${demoPlayers.slice(0,4).reduce((acc,_,idx,arr) => {
+              if(idx%2===0) acc.push([arr[idx],arr[idx+1]]);
+              return acc;
+            },[]).map(pair => `
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;padding:6px 8px;background:var(--bg-elevated);border-radius:4px">
+                <span style="flex:1;text-align:right">${escHtml(pair[0]?.name||'')}</span>
+                <span style="color:var(--text-muted);font-size:0.75rem">${r <= (t.currentRound||0) ? '1 - 0' : '— vs —'}</span>
+                <span style="flex:1">${escHtml(pair[1]?.name||'')}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  document.getElementById('td-players-content').innerHTML = `
+    <div class="cards-grid cards-grid-3">
+      ${demoPlayers.map(p => `
+        <div class="card no-hover" style="display:flex;align-items:center;gap:10px;padding:12px">
+          <div class="player-avatar" style="width:36px;height:36px;font-size:0.9rem">${p.name[0]}</div>
+          <div><div style="font-weight:600;font-size:0.85rem">${escHtml(p.name)}</div><div style="font-size:0.72rem;color:var(--text-muted)">${p.pts} pts · Rank #${p.rank}</div></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function switchTDTab(tab, btn) {
+  document.querySelectorAll('#tournament-detail-page .tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#tournament-detail-page .tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('td-tab-' + tab)?.classList.add('active');
+}
+
+function showCreateTournament() {
+  showToast('Tournament creation UI coming in next update!', 'info');
+}
+
+// ── REAL-TIME MULTIPLAYER (Firestore-based) ────────────────────────────
+// Architecture: Firestore documents as the authoritative game state.
+// Both clients listen to the same game document.
+// Server-side validation: Chess engine runs on each client but
+// only the moving player writes; the other reads + validates.
+
+async function startOnlineGame(tc) {
+  if (!APP.user?.uid) {
+    showToast('Sign in to play online', 'error');
+    showPage('signin');
+    return;
+  }
+  const db = getDb();
+  if (!db) { showToast('Connection error', 'error'); return; }
+
+  APP.selectedTC = tc || APP.selectedTC || '5+0';
+  showPage('play');
+  document.getElementById('play-waiting').style.display = 'none';
+  document.getElementById('play-game').style.display = 'none';
+
+  // Show seeking UI
+  const center = document.getElementById('play-center');
+  center.innerHTML = `
+    <div class="game-seeking">
+      <div class="seek-pulse">♟</div>
+      <div style="font-size:1.4rem;font-weight:700">Seeking opponent…</div>
+      <div style="color:var(--text-secondary)">Time control: <span style="color:var(--accent-teal)">${APP.selectedTC}</span></div>
+      <div id="seek-time" style="font-family:'Space Grotesk',monospace;font-size:1.2rem;color:var(--text-muted)">0:00</div>
+      <button class="btn btn-outline" onclick="cancelSeek()">Cancel</button>
+    </div>
+  `;
+
+  let seekSeconds = 0;
+  APP.seekInterval = setInterval(() => {
+    seekSeconds++;
+    const el = document.getElementById('seek-time');
+    if (el) el.textContent = Math.floor(seekSeconds/60) + ':' + String(seekSeconds%60).padStart(2,'0');
+  }, 1000);
+
+  try {
+    // Look for an existing seeker with same TC
+    const existingSnap = await db.collection('matchQueue')
+      .where('tc', '==', APP.selectedTC)
+      .where('status', '==', 'seeking')
+      .where('uid', '!=', APP.user.uid)
+      .limit(1).get();
+
+    if (!existingSnap.empty) {
+      // Found opponent — create game
+      const opponentDoc = existingSnap.docs[0];
+      const opponent = opponentDoc.data();
+      // Delete their queue entry
+      await opponentDoc.ref.delete();
+      // Create game document
+      const gameRef = await createFirestoreGame(APP.user.uid, opponent.uid, opponent.username, APP.selectedTC);
+      clearInterval(APP.seekInterval);
+      joinFirestoreGame(gameRef.id, 'w');
+    } else {
+      // Add self to queue
+      const myQueueRef = await db.collection('matchQueue').add({
+        uid: APP.user.uid,
+        username: APP.user.username,
+        rating: APP.user.rapidRating || 800,
+        tc: APP.selectedTC,
+        status: 'seeking',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      APP.myQueueRef = myQueueRef;
+
+      // Listen for game creation (someone picks us up)
+      const unsub = db.collection('games')
+        .where('whiteUid', '==', APP.user.uid)
+        .where('status', '==', 'waiting')
+        .orderBy('createdAt', 'desc')
+        .limit(1)
+        .onSnapshot(snap => {
+          if (!snap.empty) {
+            const gameDoc = snap.docs[0];
+            unsub();
+            clearInterval(APP.seekInterval);
+            myQueueRef.delete().catch(()=>{});
+            joinFirestoreGame(gameDoc.id, 'b');
+          }
+        });
+      APP.unsubscribes.push(unsub);
+
+      // Also listen for when black joins
+      const unsub2 = db.collection('games')
+        .where('blackUid', '==', APP.user.uid)
+        .where('status', '==', 'waiting')
+        .orderBy('createdAt', 'desc')
+        .limit(1)
+        .onSnapshot(snap => {
+          if (!snap.empty) {
+            const gameDoc = snap.docs[0];
+            unsub2();
+            clearInterval(APP.seekInterval);
+            myQueueRef.delete().catch(()=>{});
+            joinFirestoreGame(gameDoc.id, 'w');
+          }
+        });
+      APP.unsubscribes.push(unsub2);
+    }
+  } catch(e) {
+    clearInterval(APP.seekInterval);
+    console.error('Matchmaking error:', e);
+    showToast('Matchmaking error: ' + e.message, 'error');
+    resetPlayPage();
+  }
+}
+
+async function createFirestoreGame(whiteUid, blackUid, blackUsername, tc) {
+  const db = getDb();
+  const tcData = getTimeMs(tc);
+  const gameRef = await db.collection('games').add({
+    whiteUid, blackUid,
+    whiteUsername: APP.user.username,
+    blackUsername: blackUsername,
+    tc: tc,
+    whiteTime: tcData.time,
+    blackTime: tcData.time,
+    increment: tcData.inc,
+    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+    moves: [],
+    status: 'waiting',
+    activeColor: 'w',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    lastMoveAt: firebase.firestore.FieldValue.serverTimestamp(),
+    moveCount: 0,
+  });
+  return gameRef;
+}
+
+async function joinFirestoreGame(gameId, myColor) {
+  const db = getDb();
+  if (!db) return;
+
+  // Update game status to active
+  await db.collection('games').doc(gameId).update({
+    status: 'active',
+    startedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  }).catch(()=>{});
+
+  // Load game data
+  const gameSnap = await db.collection('games').doc(gameId).get();
+  const gameData = gameSnap.data();
+  if (!gameData) return;
+
+  const oppName = myColor === 'w' ? gameData.blackUsername : gameData.whiteUsername;
+  const oppUid = myColor === 'w' ? gameData.blackUid : gameData.whiteUid;
+
+  // Init local game engine
+  APP.game = {
+    engine: new ChessEngine(gameData.fen || undefined),
+    selectedSq: null,
+    legalSqs: [],
+    lastMove: null,
+    playerColor: myColor,
+    opponent: { name: oppName, rating: 1000, avatar: oppName[0]?.toUpperCase() },
+    vsComputer: false,
+    vsFirestore: true,
+    firestoreGameId: gameId,
+    whiteTime: gameData.whiteTime,
+    blackTime: gameData.blackTime,
+    increment: gameData.increment,
+    activeTimer: 'w',
+    timerRunning: true,
+    moveCount: gameData.moveCount || 0,
+    status: 'active',
+  };
+  APP.boardFlipped = (myColor === 'b');
+
+  // Rebuild play-center
+  const center = document.getElementById('play-center');
+  center.innerHTML = `
+    <div class="play-status-bar">
+      <div class="connection-dot conn-good" id="conn-dot"></div>
+      <span id="conn-label">Connected · Online game</span>
+      <span style="margin-left:auto;font-size:0.75rem;color:var(--text-muted)" id="game-id-label">Game #${gameId.slice(0,8)}</span>
+    </div>
+    <div id="play-game" style="width:100%;max-width:560px">
+      <div class="game-board-wrap">
+        <div class="game-player-bar" id="opponent-bar">
+          <div class="player-avatar" id="opp-avatar">${oppName[0]?.toUpperCase()}</div>
+          <div><div class="player-name" id="opp-name">${escHtml(oppName)}</div><div class="player-rating" id="opp-rating">~1000</div></div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+            <span id="opp-captures" style="font-size:0.8rem;color:var(--text-muted)"></span>
+            <div class="clock" id="clock-b">${formatTime(gameData.blackTime)}</div>
+          </div>
+        </div>
+        <div class="game-board-container"><div class="game-board" id="main-board"></div></div>
+        <div class="draw-offer-banner" id="draw-offer-banner">
+          <span>⚖ Your opponent offers a draw</span>
+          <button class="btn btn-sm btn-green" onclick="acceptDrawOffer('${gameId}')">Accept</button>
+          <button class="btn btn-sm btn-outline" onclick="declineDrawOffer('${gameId}')">Decline</button>
+        </div>
+        <div class="game-player-bar" id="player-bar">
+          <div class="player-avatar" id="me-avatar">${APP.user?.username?.[0]?.toUpperCase()||'Y'}</div>
+          <div><div class="player-name" id="me-name">${escHtml(APP.user?.username||'You')}</div><div class="player-rating" id="me-rating">${APP.user?.rapidRating||'—'}</div></div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+            <span id="me-captures" style="font-size:0.8rem;color:var(--text-muted)"></span>
+            <div class="clock" id="clock-w">${formatTime(gameData.whiteTime)}</div>
+          </div>
+        </div>
+      </div>
+      <div class="game-controls">
+        <button class="btn btn-sm btn-outline" onclick="flipBoard()">⇅ Flip</button>
+        <button class="btn btn-sm btn-outline" onclick="offerDraw()">½ Draw</button>
+        <button class="btn btn-sm btn-danger" onclick="resignGame()">⚑ Resign</button>
+      </div>
+      <div class="move-list-panel"><div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Moves</div><div class="move-list" id="move-list"></div></div>
+    </div>
+  `;
+
+  renderGameBoard();
+  startGameClock();
+  SoundEngine.gameStart();
+  showToast(`Game started vs ${oppName}!`, 'success');
+
+  // Listen for opponent moves
+  const moveUnsub = db.collection('games').doc(gameId)
+    .onSnapshot(snap => {
+      if (!snap.exists) return;
+      const data = snap.data();
+      if (!APP.game || APP.game.firestoreGameId !== gameId) return;
+
+      // Check if opponent made a move
+      const serverMoves = data.moves || [];
+      const localMoves = APP.game.engine.history.length;
+      if (serverMoves.length > localMoves) {
+        // Apply opponent's move
+        const lastServerMove = serverMoves[serverMoves.length - 1];
+        if (lastServerMove && data.activeColor === APP.game.playerColor) {
+          const fromIdx = APP.game.engine.algToIdx(lastServerMove.from);
+          const toIdx = APP.game.engine.algToIdx(lastServerMove.to);
+          const result = APP.game.engine.move(fromIdx, toIdx, lastServerMove.promotion || 'Q');
+          if (result) {
+            APP.game.lastMove = { from: fromIdx, to: toIdx };
+            APP.game.whiteTime = data.whiteTime;
+            APP.game.blackTime = data.blackTime;
+            APP.game.activeTimer = data.activeColor;
+            updateMoveList(APP.game.engine.history);
+            renderGameBoard();
+            onMoveAccepted(result, APP.game.engine.status);
+            if (APP.game.engine.status !== 'active') {
+              endGame(APP.game.engine.status, APP.game.engine.winner);
+            }
+          }
+        }
+      }
+      // Draw offer
+      if (data.drawOffer && data.drawOffer !== APP.game.playerColor) {
+        document.getElementById('draw-offer-banner')?.classList.add('visible');
+      }
+      // Game ended by server
+      if (data.status === 'finished' && APP.game.status === 'active') {
+        APP.game.status = 'finished';
+        endGame(data.endReason || 'resignation', data.winner === APP.game.playerColor ? APP.game.playerColor : (data.winner === 'draw' ? null : (APP.game.playerColor === 'w' ? 'b' : 'w')));
+      }
+    });
+  APP.unsubscribes.push(moveUnsub);
+}
+
+async function submitMoveToFirestore(fromAlg, toAlg, promotion, moveResult, engineStatus) {
+  if (!APP.game?.firestoreGameId || !APP.user?.uid) return;
+  const db = getDb();
+  if (!db) return;
+  const g = APP.game;
+  const newMove = { from: fromAlg, to: toAlg, notation: moveResult.notation };
+  if (promotion) newMove.promotion = promotion;
+  try {
+    await db.collection('games').doc(g.firestoreGameId).update({
+      moves: firebase.firestore.FieldValue.arrayUnion(newMove),
+      fen: g.engine.getFen(),
+      activeColor: g.engine.turn,
+      whiteTime: g.whiteTime,
+      blackTime: g.blackTime,
+      lastMoveAt: firebase.firestore.FieldValue.serverTimestamp(),
+      moveCount: firebase.firestore.FieldValue.increment(1),
+      ...(engineStatus !== 'active' ? { status: 'finished', endReason: engineStatus, winner: engineStatus === 'checkmate' ? (g.engine.turn === 'w' ? 'b' : 'w') : 'draw' } : {}),
+    });
+  } catch(e) {
+    console.error('Move submit error:', e);
+  }
+}
+
+function cancelSeek() {
+  clearInterval(APP.seekInterval);
+  if (APP.myQueueRef) {
+    APP.myQueueRef.delete().catch(()=>{});
+    APP.myQueueRef = null;
+  }
+  APP.unsubscribes.forEach(u => { try { u(); } catch(e) {} });
+  APP.unsubscribes = [];
+  resetPlayPage();
+  showToast('Matchmaking cancelled', 'info');
+}
+
+function resetPlayPage() {
+  const center = document.getElementById('play-center');
+  if (center) {
+    center.innerHTML = `
+      <div id="play-waiting" style="text-align:center;padding:60px 20px">
+        <div style="font-size:4rem;margin-bottom:20px">♟</div>
+        <h2 style="font-size:1.8rem;margin-bottom:12px">Ready to play?</h2>
+        <p style="color:var(--text-secondary);margin-bottom:24px">Choose a time control and find a game.</p>
+        <button class="btn btn-primary btn-xl" onclick="startMatchmaking()">⚡ Find Quick Game</button>
+        <div style="margin-top:20px"><button class="btn btn-outline" onclick="startVsComputer()">Play vs Computer</button></div>
+      </div>
+    `;
+  }
+}
+
+function acceptDrawOffer(gameId) {
+  const db = getDb();
+  if (!db) return;
+  db.collection('games').doc(gameId).update({ status: 'finished', endReason: 'draw', winner: 'draw' }).catch(()=>{});
+  document.getElementById('draw-offer-banner')?.classList.remove('visible');
+  endGame('draw', null);
+}
+
+function declineDrawOffer(gameId) {
+  const db = getDb();
+  if (!db) return;
+  db.collection('games').doc(gameId).update({ drawOffer: null }).catch(()=>{});
+  document.getElementById('draw-offer-banner')?.classList.remove('visible');
+  showToast('Draw declined', 'info');
+}
+
+// ── OVERRIDE offerDraw for Firestore games ──
+const _originalOfferDraw = offerDraw;
+window.offerDraw = function() {
+  if (APP.game?.vsFirestore && APP.game?.firestoreGameId) {
+    const db = getDb();
+    if (!db) return;
+    db.collection('games').doc(APP.game.firestoreGameId)
+      .update({ drawOffer: APP.game.playerColor }).catch(()=>{});
+    showToast('Draw offer sent', 'info');
+    return;
+  }
+  _originalOfferDraw();
+};
+
+// ── OVERRIDE resignGame for Firestore games ──
+const _originalResign = resignGame;
+window.resignGame = function() {
+  if (!confirm('Are you sure you want to resign?')) return;
+  if (APP.game?.vsFirestore && APP.game?.firestoreGameId) {
+    const db = getDb();
+    if (!db) return;
+    const winner = APP.game.playerColor === 'w' ? 'b' : 'w';
+    db.collection('games').doc(APP.game.firestoreGameId)
+      .update({ status: 'finished', endReason: 'resignation', winner }).catch(()=>{});
+    endGame('resignation', winner);
+    return;
+  }
+  _originalResign.call(window);
+};
+
+// ── OVERRIDE handleSquareClick to submit Firestore moves ──
+const _origHandleSquareClick = handleSquareClick;
+window.handleSquareClick = function(idx) {
+  if (!APP.game?.vsFirestore) { _origHandleSquareClick(idx); return; }
+  const g = APP.game;
+  const engine = g.engine;
+  if (g.status !== 'active') return;
+  if (engine.turn !== g.playerColor) return;
+
+  const piece = engine.board[idx];
+  if (g.selectedSq === null) {
+    if (piece && piece.color === engine.turn) {
+      g.selectedSq = idx; g.legalSqs = engine.legalMoves(idx);
+      renderGameBoard();
+    }
+  } else {
+    if (g.legalSqs.includes(idx)) {
+      const fromAlg = engine.idxToAlg(g.selectedSq);
+      const toAlg = engine.idxToAlg(idx);
+      const moveResult = engine.move(g.selectedSq, idx);
+      if (moveResult) {
+        g.lastMove = { from: g.selectedSq, to: idx };
+        g.selectedSq = null; g.legalSqs = [];
+        g.moveCount++;
+        if (g.activeTimer === 'w') g.whiteTime += g.increment;
+        else g.blackTime += g.increment;
+        g.activeTimer = engine.turn;
+        updateMoveList(engine.history);
+        renderGameBoard();
+        onMoveAccepted(moveResult, engine.status);
+        submitMoveToFirestore(fromAlg, toAlg, moveResult.promotion, moveResult, engine.status);
+        if (engine.status !== 'active') endGame(engine.status, engine.winner);
+      }
+    } else if (piece && piece.color === engine.turn) {
+      g.selectedSq = idx; g.legalSqs = engine.legalMoves(idx);
+      renderGameBoard();
+    } else {
+      g.selectedSq = null; g.legalSqs = []; renderGameBoard();
+    }
+  }
+};
+
+// ── LOAD NOTIFICATIONS FROM FIRESTORE ──────────────────────────────────
+async function loadNotificationsFromFirestore() {
+  if (!APP.user?.uid) return;
+  const db = getDb();
+  if (!db) return;
+  try {
+    const snap = await db.collection('users').doc(APP.user.uid)
+      .collection('notifications')
+      .orderBy('createdAt', 'desc').limit(20).get();
+    const firestoreNotifs = snap.docs.map(d => ({
+      id: d.id,
+      type: d.data().type,
+      text: d.data().text,
+      data: d.data().data || {},
+      time: d.data().createdAt?.toDate() || new Date(),
+      read: d.data().read || false,
+    }));
+    APP.notifications = [...firestoreNotifs, ...APP.notifications];
+    updateNotifUI();
+  } catch(e) {}
+}
+
+// ── EXTENDED showPage ──────────────────────────────────────────────────
+const _origShowPage = showPage;
+window.showPage = function(name) {
+  _origShowPage(name);
+  if (name === 'friends') initFriendsPage();
+  if (name === 'tournaments') initTournamentsPage();
+  if (name === 'tournament-detail') {
+    const page = document.getElementById('tournament-detail-page');
+    if (page) { page.classList.add('active'); }
+  }
+};
+
+// ── ENHANCED loginUser — run extra Firebase setup ──────────────────────
+const _origLoginUser = loginUser;
+window.loginUser = function(userData) {
+  _origLoginUser(userData);
+  // Start presence, notifications, challenge listeners
+  setTimeout(() => {
+    updatePresence('online');
+    loadNotificationsFromFirestore();
+    listenForChallenges();
+    listenToFriendsPresence();
+  }, 1000);
+};
+
+// ── UTILITY ───────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── MORE COURSES ───────────────────────────────────────────────────────
+const EXTRA_COURSES = [
+  {
+    id:'middlegame', title:'Middlegame Mastery', category:'middlegame', emoji:'⚔',
+    bg:'linear-gradient(135deg,#1a1a3e,#0d0d2a)',
+    desc:'Plans, pawn structures, piece activity, and attack. The critical phase of the chess game.',
+    lessons:[
+      {title:'Pawn Structure Basics',type:'study',
+       fen:'r1bqk2r/ppp2ppp/2np1n2/2b1p3/2B1P3/2NP1N2/PPP2PPP/R1BQK2R w KQkq - 0 6',
+       desc:'Pawn structure determines your piece placement and long-term plan. Strong pawns control key squares; weak pawns become targets.',
+       keyIdeas:['Doubled pawns are weak on the same file','Isolated pawns need piece support','Passed pawns must be advanced']},
+      {title:'Open Files and Rooks',type:'study',
+       fen:'r4rk1/ppp2ppp/2np1n2/2b1p3/2B1P3/2NP1N2/PPP2PPP/R1BQR1K1 w - - 0 10',
+       desc:'Rooks belong on open files. Control of an open file gives your rook maximum activity and can lead to penetration.',
+       keyIdeas:['Place rooks on open or semi-open files','Double rooks on the same file','Rooks on the 7th rank are powerful']},
+    ]
+  },
+  {
+    id:'checkmates', title:'Checkmate Patterns', category:'tactics', emoji:'♛',
+    bg:'linear-gradient(135deg,#3d0000,#1a0000)',
+    desc:'Learn the essential checkmate patterns every chess player must know.',
+    lessons:[
+      {title:"Scholar's Mate",type:'study',
+       fen:'rnbqkbnr/pppp1ppp/8/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR b KQkq - 3 3',
+       desc:"Scholar's Mate threatens checkmate on f7. Black must be aware of this early attack and know how to defend against it.",
+       keyIdeas:['Qxf7# is threatened in this position','Black must develop to defend f7','Scholar\'s Mate only works against beginners']},
+      {title:'Back Rank Mate',type:'study',
+       fen:'6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1',
+       desc:'The back rank mate occurs when a king is trapped on the first or eighth rank by its own pawns and checkmated by a rook or queen.',
+       keyIdeas:['Create a back rank escape square with h3 or h6','Watch for rook invasions on the back rank','Activate your rook to use back rank threats']},
+      {title:'Smothered Mate',type:'study',
+       fen:'6rk/6pp/7N/8/8/8/8/7K w - - 0 1',
+       desc:'Smothered mate is a checkmate delivered by a knight when the king is surrounded by its own pieces.',
+       keyIdeas:['Knight jumps to f7 giving check','King is smothered by its own pieces','Look for knight fork opportunities near the king']},
+    ]
+  },
+  {
+    id:'strategy', title:'Strategic Concepts', category:'middlegame', emoji:'🧠',
+    bg:'linear-gradient(135deg,#001a3d,#000d20)',
+    desc:'Outposts, weak squares, piece coordination, and long-term planning.',
+    lessons:[
+      {title:'Outposts and Knight Holes',type:'study',
+       fen:'r1bq1rk1/ppp2ppp/2np1n2/4p3/2B1P3/2NP1N2/PPP2PPP/R1BQ1RK1 w - - 0 8',
+       desc:'An outpost is a square that cannot be attacked by enemy pawns. A knight on an outpost in enemy territory is extremely powerful.',
+       keyIdeas:['Knights love squares that cannot be attacked by pawns','d5 and e5 are classic outpost squares','Occupy outposts before your opponent does']},
+    ]
+  },
+  {
+    id:'rook-endgames', title:'Rook Endgames', category:'endgame', emoji:'🏰',
+    bg:'linear-gradient(135deg,#1a2d00,#0d1a00)',
+    desc:'Philidor position, Lucena position, active vs passive rook.',
+    lessons:[
+      {title:'Philidor Position',type:'study',
+       fen:'8/8/8/3k4/8/3K4/3R4/3r4 w - - 0 1',
+       desc:'The Philidor position is the key drawing technique for the weaker side in rook endgames. The defending rook goes to the third rank.',
+       keyIdeas:['Rook on the 3rd rank blocks the king','Once pawn advances, go to the back rank for checks','The key idea: cut off the king from the pawn']},
+      {title:'Active Rook Principle',type:'study',
+       fen:'8/5k2/4p3/4P3/4K3/8/8/1R6 w - - 0 1',
+       desc:'In rook endgames, an active rook almost always outweighs material. Attack from the side or behind enemy pawns.',
+       keyIdeas:['Active rooks attack enemy pawns','Passive rooks lose endgames','Give up pawns to activate your rook if needed']},
+    ]
+  },
+];
+
+// Merge extra courses into COURSES_DATA
+EXTRA_COURSES.forEach(c => {
+  if (!COURSES_DATA.find(e => e.id === c.id)) COURSES_DATA.push(c);
+});
+
+// Refresh courses grids if on learn page
+function refreshCoursesIfNeeded() {
+  if (APP.currentPage === 'learn') renderCoursesByCategory();
+}
+setTimeout(refreshCoursesIfNeeded, 100);
+
 </script>
 
 <!-- FORGOT PASSWORD PAGE -->
@@ -4340,5 +5769,145 @@ function onMoveAccepted(moveResult, engineStatus) {
     </div>
   </div>
 </div>
+
+<!-- FRIENDS PAGE -->
+<div id="friends-page" class="page">
+  <div class="section">
+    <h1 style="font-size:2rem;margin-bottom:8px">👥 Friends</h1>
+    <p style="color:var(--text-secondary);margin-bottom:24px">Find players, send friend requests, challenge friends.</p>
+    <div class="friends-layout">
+      <div>
+        <!-- Search -->
+        <div class="side-panel" style="margin-bottom:12px">
+          <div class="side-panel-title">Find Players</div>
+          <div class="search-box" style="margin-bottom:12px">
+            <span>🔍</span>
+            <input type="text" placeholder="Search by username…" id="player-search-input" oninput="searchPlayers(this.value)">
+          </div>
+          <div id="player-search-results">
+            <div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:16px">Type to search players</div>
+          </div>
+        </div>
+        <!-- Incoming requests -->
+        <div class="side-panel">
+          <div class="side-panel-title">Friend Requests <span id="req-count" style="color:var(--accent-teal)"></span></div>
+          <div id="friend-requests-list">
+            <div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:16px">No pending requests</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <!-- Friends list -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:1rem;font-weight:700">My Friends <span id="friends-count" style="color:var(--text-muted);font-size:0.85rem"></span></h3>
+          <div class="online-badge"><span class="online-dot"></span><span id="online-friends-count">0</span> online</div>
+        </div>
+        <div id="friends-list">
+          <div style="color:var(--text-muted);text-align:center;padding:40px;font-size:0.875rem">
+            No friends yet. Search for players to add them! 👆
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHALLENGE MODAL -->
+<div class="challenge-modal" id="challenge-modal">
+  <div class="modal-box">
+    <h3 style="margin-bottom:4px">Challenge Friend</h3>
+    <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:20px" id="challenge-target-name">Select a time control</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+      <div class="tc-btn selected" onclick="selectChallengeTC(this,'3+0')"><span class="tc-time">3</span><span class="tc-type">Blitz</span></div>
+      <div class="tc-btn" onclick="selectChallengeTC(this,'5+0')"><span class="tc-time">5</span><span class="tc-type">Blitz</span></div>
+      <div class="tc-btn" onclick="selectChallengeTC(this,'10+0')"><span class="tc-time">10</span><span class="tc-type">Rapid</span></div>
+      <div class="tc-btn" onclick="selectChallengeTC(this,'15+10')"><span class="tc-time">15+10</span><span class="tc-type">Rapid</span></div>
+      <div class="tc-btn" onclick="selectChallengeTC(this,'1+0')"><span class="tc-time">1</span><span class="tc-type">Bullet</span></div>
+      <div class="tc-btn" onclick="selectChallengeTC(this,'2+1')"><span class="tc-time">2+1</span><span class="tc-type">Bullet</span></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-outline" onclick="closeChallengeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="sendChallenge()">⚔ Send Challenge</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- TOURNAMENTS PAGE -->
+<div id="tournaments-page" class="page">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px">
+      <h1 style="font-size:2rem">🏆 Tournaments</h1>
+      <button class="btn btn-primary" onclick="showCreateTournament()" id="create-tourney-btn" style="display:none">+ Create Tournament</button>
+    </div>
+    <p style="color:var(--text-secondary);margin-bottom:24px">Compete in structured chess tournaments.</p>
+    
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTourneyTab('open',this)">Open</button>
+      <button class="tab-btn" onclick="switchTourneyTab('live',this)">Live</button>
+      <button class="tab-btn" onclick="switchTourneyTab('finished',this)">Finished</button>
+    </div>
+
+    <div id="tournaments-grid" class="cards-grid cards-grid-3">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- TOURNAMENT DETAIL PAGE -->
+<div id="tournament-detail-page" class="page">
+  <div class="section">
+    <button class="btn btn-ghost btn-sm" onclick="showPage('tournaments')" style="margin-bottom:16px">← Back to Tournaments</button>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+      <div>
+        <h1 style="font-size:1.8rem;margin-bottom:6px" id="td-title">Tournament</h1>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;color:var(--text-secondary);font-size:0.85rem" id="td-meta"></div>
+      </div>
+      <div id="td-action-wrap"></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTDTab('overview',this)">Overview</button>
+      <button class="tab-btn" onclick="switchTDTab('standings',this)">Standings</button>
+      <button class="tab-btn" onclick="switchTDTab('rounds',this)">Rounds</button>
+      <button class="tab-btn" onclick="switchTDTab('players',this)">Players</button>
+    </div>
+
+    <div class="tab-content active" id="td-tab-overview">
+      <div style="display:grid;grid-template-columns:1fr 280px;gap:20px">
+        <div>
+          <div class="card no-hover" style="margin-bottom:16px">
+            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7" id="td-desc"></div>
+          </div>
+          <div id="td-current-round"></div>
+        </div>
+        <div>
+          <div class="side-panel" style="margin-bottom:12px">
+            <div class="side-panel-title">Details</div>
+            <div id="td-details" style="display:flex;flex-direction:column;gap:8px;font-size:0.83rem"></div>
+          </div>
+          <div class="side-panel">
+            <div class="side-panel-title">Top Players</div>
+            <div id="td-top-players"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="td-tab-standings">
+      <div class="card no-hover" style="padding:0;overflow:hidden">
+        <table class="standings-table"><thead><tr>
+          <th>#</th><th>Player</th><th>Points</th><th>Wins</th><th>Draws</th><th>Losses</th>
+        </tr></thead><tbody id="td-standings-body"></tbody></table>
+      </div>
+    </div>
+    <div class="tab-content" id="td-tab-rounds">
+      <div id="td-rounds-content"></div>
+    </div>
+    <div class="tab-content" id="td-tab-players">
+      <div id="td-players-content"></div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
