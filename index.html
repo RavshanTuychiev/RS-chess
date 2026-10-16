@@ -71,11 +71,11 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   height: var(--nav-height);
-  background: rgba(8,13,20,0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(8,13,20,0.97);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center;
-  padding: 0 20px; gap: 0;
+  padding: 0 16px; gap: 0;
 }
 
 .nav-logo {
@@ -99,7 +99,7 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 .nav-links {
   display: flex; align-items: center; gap: 4px;
   flex: 1; overflow-x: auto;
-  scrollbar-width: none;
+  scrollbar-width: none; min-width: 0;
 }
 .nav-links::-webkit-scrollbar { display: none; }
 
@@ -417,7 +417,8 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 
 .game-controls {
   display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
-  padding: 8px 0;
+  padding: 8px 0; width: 100%;
+  max-width: min(560px, calc(100vw - 24px));
 }
 
 /* ─── MOVE LIST ─── */
@@ -460,8 +461,8 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 .matchmaking-overlay {
   position: fixed; inset: 0; z-index: 200;
   background: rgba(8,13,20,0.95); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  display: none;
+  display: none; align-items: center; justify-content: center;
+  padding: 16px;
 }
 .matchmaking-overlay.active { display: flex; }
 
@@ -487,8 +488,9 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 /* ─── RESULT MODAL ─── */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 300;
-  background: rgba(8,13,20,0.9); backdrop-filter: blur(8px);
+  background: rgba(8,13,20,0.92); backdrop-filter: blur(10px);
   display: none; align-items: center; justify-content: center;
+  padding: 16px;
 }
 .modal-overlay.active { display: flex; }
 
@@ -556,6 +558,8 @@ h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2;
 
 .profile-tabs {
   display: flex; gap: 0; border-bottom: none;
+  overflow-x: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .profile-tab {
@@ -767,7 +771,7 @@ canvas.rating-canvas { width: 100% !important; height: 120px !important; }
 
 .auth-box {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-xl); padding: 40px;
+  border-radius: var(--radius-xl); padding: clamp(24px,5vw,40px);
   width: 100%; max-width: 420px;
   box-shadow: var(--shadow-card), 0 0 80px rgba(0,0,0,0.5);
 }
@@ -819,6 +823,11 @@ canvas.rating-canvas { width: 100% !important; height: 120px !important; }
 .course-layout {
   display: grid; grid-template-columns: 320px 1fr;
   gap: 0; min-height: calc(100vh - var(--nav-height));
+}
+@media (max-width: 768px) {
+  .course-layout { grid-template-columns: 1fr; }
+  .course-sidebar { max-height: 260px; overflow-y: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .course-main { padding: 20px 16px; }
 }
 
 .course-sidebar {
@@ -894,7 +903,8 @@ footer {
 .footer-bottom {
   max-width: 1200px; margin: 24px auto 0;
   padding-top: 20px; border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
   font-size: 0.78rem; color: var(--text-muted);
 }
 
@@ -1280,11 +1290,268 @@ input[type=range].vol-slider::-webkit-slider-thumb {
 }
 .draw-offer-banner.visible { display: flex; }
 
+
+/* ═══ VISUAL QUALITY PASS ═══════════════════════════════════ */
+
+/* ── BODY overflow ── */
+body { overflow-x: hidden; }
+
+/* ── MOBILE NAV ── */
+.nav-mobile-toggle {
+  display: none;
+  background: none; border: none; color: var(--text-primary);
+  font-size: 1.4rem; cursor: pointer; padding: 6px;
+  margin-left: 4px; flex-shrink: 0;
+}
+.nav-mobile-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(8,13,20,0.97); z-index: 999;
+  flex-direction: column; padding: 20px;
+  padding-top: calc(var(--nav-height) + 16px);
+}
+.nav-mobile-overlay.open { display: flex; }
+.nav-mobile-overlay .nav-link {
+  font-size: 1.1rem; padding: 14px 16px; width: 100%;
+  border-bottom: 1px solid var(--border); border-radius: 0;
+}
+.nav-mobile-overlay .nav-link:last-child { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; align-items: center; justify-content: center; }
+  
+  /* Board: always full width on mobile */
+  .game-board-wrap { max-width: 100% !important; }
+  #play-game { max-width: 100% !important; width: 100% !important; }
+  
+  /* Play layout: single column */
+  .play-layout { grid-template-columns: 1fr !important; padding: 12px !important; }
+  .play-sidebar-left, .play-sidebar-right { display: block !important; }
+  .play-sidebar-left { order: 2; }
+  .play-sidebar-right { order: 3; }
+  #play-center { order: 1; }
+  
+  /* Friends layout */
+  .friends-layout { grid-template-columns: 1fr !important; }
+  
+  /* Profile */
+  .profile-content { grid-template-columns: 1fr !important; }
+  .profile-header { padding: 20px 16px 0 !important; }
+  .profile-top { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+  .profile-ratings { justify-content: center !important; }
+  .profile-tabs { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  
+  /* Tournament detail */
+  #td-tab-overview > div { grid-template-columns: 1fr !important; }
+  
+  /* Hero */
+  .hero { padding: 32px 16px !important; }
+  .hero h1 { font-size: 2rem !important; }
+  .hero-ctas { flex-direction: column !important; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  
+  /* Section padding */
+  .section { padding: 32px 16px !important; }
+  
+  /* Auth pages */
+  .auth-box { padding: 28px 20px !important; }
+  
+  /* Course layout */
+  .course-layout { grid-template-columns: 1fr !important; }
+  .course-sidebar { border-right: none !important; border-bottom: 1px solid var(--border); max-height: 280px; }
+  
+  /* Stats row */
+  .stats-row { grid-template-columns: repeat(3,1fr) !important; }
+  
+  /* Footer */
+  .footer-inner { grid-template-columns: 1fr 1fr !important; }
+  
+  /* Puzzle layout */
+  .puzzle-layout { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr !important; }
+  .founder-cards { grid-template-columns: 1fr !important; }
+  .hero-stats { gap: 20px !important; }
+  .profile-ratings { flex-direction: column !important; }
+  .rating-card { min-width: unset !important; }
+  .footer-inner { grid-template-columns: 1fr !important; }
+  .achievements-grid { grid-template-columns: repeat(3,1fr) !important; }
+  .nav-logo span { display: none; }  /* hide text, show RS icon only on tiny screens */
+}
+
+/* ── NOTIFICATION DROPDOWN — mobile safe ── */
+.notif-dropdown {
+  right: 8px !important;
+  left: 8px !important;
+  width: auto !important;
+  max-width: 380px !important;
+}
+@media (min-width: 480px) {
+  .notif-dropdown {
+    left: auto !important;
+    width: 340px !important;
+  }
+}
+
+/* ── TOUCH TARGETS — minimum 44px ── */
+.btn-sm { min-height: 36px; padding: 6px 14px !important; }
+@media (max-width: 768px) {
+  .btn-sm { min-height: 44px; }
+  .tc-btn { min-height: 52px !important; }
+}
+
+/* ── PLAY PAGE BOARD CENTERING ── */
+.play-center { width: 100%; }
+.game-board-wrap {
+  width: 100%;
+  max-width: min(560px, calc(100vw - 24px));
+}
+#play-game {
+  width: 100%;
+  max-width: min(560px, calc(100vw - 24px));
+}
+
+/* ── PUZZLE BOARD mobile ── */
+#puzzle-board {
+  max-width: min(480px, calc(100vw - 32px)) !important;
+}
+
+/* ── SMOOTH SCROLLING for tabs ── */
+.profile-tabs::-webkit-scrollbar { height: 3px; }
+
+/* ── CARD HOVER — reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover, .course-card:hover, .tournament-card:hover {
+    transform: none !important;
+  }
+  .seek-pulse { animation: none !important; }
+  .mm-spinner { animation: none !important; }
+}
+
+/* ── IMPROVED BUTTON STATES ── */
+.btn:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-green:active { transform: scale(0.98); }
+
+/* ── CLOCK COLORS ── */
+#clock-w.active-clock, #clock-b.active-clock {
+  background: rgba(0,201,167,0.15);
+  border: 1px solid var(--accent-teal);
+  color: var(--text-primary);
+}
+
+/* ── LOADING SKELETON ── */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-card-hover) 50%,
+    var(--bg-elevated) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 48px 24px;
+  color: var(--text-muted);
+}
+.empty-state-icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state-title { font-size: 1rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+
+/* ── FORM IMPROVEMENTS ── */
+.form-input:focus { box-shadow: 0 0 0 3px rgba(0,201,167,0.12); }
+.form-error { display: flex; align-items: center; gap: 4px; }
+.form-error::before { content: "⚠"; font-size: 0.7rem; }
+
+/* ── SCROLLBAR STYLED ── */
+* { scrollbar-width: thin; scrollbar-color: var(--border-light) transparent; }
+
+/* ── GAME BOARD WRAP — no height override ── */
+.game-board-container { width: 100%; }
+
+/* ── MOVE LIST IMPROVEMENTS ── */
+.move-list-panel {
+  width: 100%;
+  max-width: min(560px, calc(100vw - 24px));
+}
+
+/* ── TOAST MOBILE ── */
+#toast-container {
+  bottom: 16px !important;
+  right: 12px !important;
+  left: 12px !important;
+  max-width: 380px !important;
+}
+@media (min-width: 480px) {
+  #toast-container { left: auto !important; }
+}
+
+/* ── ACTIVE CLOCK HIGHLIGHT ── */
+.clock.active-turn {
+  background: rgba(0,201,167,0.1);
+  border: 1px solid rgba(0,201,167,0.3);
+}
+
+/* ── IMPROVE LEADERBOARD TABLE MOBILE ── */
+@media (max-width: 600px) {
+  .leaderboard-table th:nth-child(5),
+  .leaderboard-table td:nth-child(5) { display: none; }
+  .leaderboard-table th:nth-child(6),
+  .leaderboard-table td:nth-child(6) { display: none; }
+}
+
+/* ── IMPROVE GAME HISTORY MOBILE ── */
+@media (max-width: 520px) {
+  .game-history-row { flex-wrap: wrap; gap: 8px; }
+}
+
+/* ── NAV LOGO ── */
+.nav-logo { text-decoration: none !important; }
+
+/* ── HERO SECTION BACKGROUND ── */
+#home-page {
+  background:
+    radial-gradient(ellipse at 15% 40%, rgba(0,201,167,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(59,130,246,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(168,85,247,0.04) 0%, transparent 50%),
+    var(--bg-deepest);
+}
+
+/* ── COURSE SIDEBAR SCROLLBAR ── */
+.course-sidebar { scrollbar-width: thin; }
+
+/* ── IMPROVED ABOUT SECTION ── */
+@media (max-width: 768px) {
+  #home-page .section:last-of-type { margin: 0 12px 32px !important; padding: 32px 20px !important; }
+}
+
 </style>
 </head>
 <body>
 
 <!-- ─── NAVIGATION ─── -->
+
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="nav-mobile-overlay" id="mobile-nav-overlay" onclick="closeMobileNav(event)">
+  <button class="nav-link" onclick="showPage('home');closeMobileNav()"><span class="nav-link-icon">🏠</span> Home</button>
+  <button class="nav-link" onclick="showPage('play');closeMobileNav()"><span class="nav-link-icon">⚡</span> Play</button>
+  <button class="nav-link" onclick="showPage('puzzles');closeMobileNav()"><span class="nav-link-icon">🧩</span> Puzzles</button>
+  <button class="nav-link" onclick="showPage('learn');closeMobileNav()"><span class="nav-link-icon">📚</span> Learn</button>
+  <button class="nav-link" onclick="showPage('tournaments');closeMobileNav()"><span class="nav-link-icon">🏆</span> Tournaments</button>
+  <button class="nav-link" onclick="showPage('friends');closeMobileNav()"><span class="nav-link-icon">👥</span> Friends</button>
+  <button class="nav-link" onclick="showPage('leaderboard');closeMobileNav()"><span class="nav-link-icon">📊</span> Rankings</button>
+  <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px" id="mobile-nav-auth">
+    <button class="btn btn-outline" onclick="showPage('signin');closeMobileNav()">Sign In</button>
+    <button class="btn btn-primary" onclick="showPage('signup');closeMobileNav()">Create Account</button>
+  </div>
+</div>
 
 <!-- AUTH LOADING OVERLAY -->
 <div id="auth-loading-overlay" class="auth-loading-overlay hidden">
@@ -1296,6 +1563,7 @@ input[type=range].vol-slider::-webkit-slider-thumb {
     <div class="logo-icon">RS</div>
     <span>RS<span style="color:var(--accent-teal)">.</span>chess</span>
   </a>
+  <button class="nav-mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><rect y="3" width="20" height="2" rx="1"/><rect y="9" width="20" height="2" rx="1"/><rect y="15" width="20" height="2" rx="1"/></svg></button>
   <div class="nav-links">
     <button class="nav-link active" id="nav-home" onclick="showPage('home')"><span class="nav-link-icon">♟</span><span>Home</span></button>
     <button class="nav-link" id="nav-play" onclick="showPage('play')"><span class="nav-link-icon">⚡</span><span>Play</span></button>
@@ -1852,6 +2120,7 @@ input[type=range].vol-slider::-webkit-slider-thumb {
 
 <!-- ═══════════════════════════════ PROFILE PAGE ═══════════════════════════════ -->
 <div id="profile-page" class="page">
+  <div class="profile-cover"></div>
   <div class="profile-header">
     <div class="profile-top">
       <div class="profile-avatar-wrap">
@@ -2539,6 +2808,9 @@ function showPage(name) {
   // Page-specific init
   if (name === 'home') initHomePage();
   if (name === 'forgot') { const e=document.getElementById('forgot-email'); if(e) e.value=''; const m=document.getElementById('forgot-msg'); if(m) m.innerHTML=''; }
+  
+  // Mobile nav: close on page change
+  document.getElementById('mobile-nav-overlay')?.classList.remove('open');
   if (name === 'play') initPlayPage();
   if (name === 'puzzles') initPuzzlePage();
   if (name === 'learn') initLearnPage();
@@ -2848,10 +3120,13 @@ function startGameClock() {
 function updateClockDisplay() {
   if (!APP.game) return;
   const g = APP.game;
-  document.getElementById('clock-w').textContent = formatTime(g.whiteTime);
-  document.getElementById('clock-b').textContent = formatTime(g.blackTime);
-  document.getElementById('clock-w').className = 'clock' + (g.activeTimer === 'w' && g.whiteTime < 30000 ? ' low-time' : '');
-  document.getElementById('clock-b').className = 'clock' + (g.activeTimer === 'b' && g.blackTime < 30000 ? ' low-time' : '');
+  const cwEl = document.getElementById('clock-w');
+  const cbEl = document.getElementById('clock-b');
+  if (!cwEl || !cbEl) return;
+  cwEl.textContent = formatTime(g.whiteTime);
+  cbEl.textContent = formatTime(g.blackTime);
+  cwEl.className = 'clock' + (g.activeTimer === 'w' && g.whiteTime < 30000 ? ' low-time' : '') + (g.activeTimer === 'w' ? ' active-turn' : '');
+  cbEl.className = 'clock' + (g.activeTimer === 'b' && g.blackTime < 30000 ? ' low-time' : '') + (g.activeTimer === 'b' ? ' active-turn' : '');
 }
 
 function formatTime(ms) {
@@ -3815,6 +4090,7 @@ function loginUser(userData) {
   document.getElementById('nav-username-btn').textContent = userData.username;
   const notifWrap = document.getElementById('notif-wrap');
   if (notifWrap) notifWrap.style.display = 'block';
+  updateMobileNavAuth();
 }
 
 function logoutUser() {
@@ -4936,27 +5212,21 @@ async function sendChallenge() {
     addNotification('challenge', `Challenge sent to ${APP.challengeTarget.username} (${APP.challengeTC})`);
 
     // Listen for acceptance — start game on challenger's side
+    const targetUsername = APP.challengeTarget?.username || 'Opponent';
     const unsub = db.collection('challenges').doc(docRef.id)
       .onSnapshot(snap => {
         if (!snap.exists) return;
         const data = snap.data();
-        if (data.status === 'accepted') {
+        if (data.status === 'accepted' && data.gameId) {
           unsub();
-          showToast(`${APP.challengeTarget?.username || 'Opponent'} accepted! Starting game…`, 'success');
+          showToast(`${targetUsername} accepted! Starting game…`, 'success');
           APP.selectedTC = APP.challengeTC;
-          // Find the game where we are white
-          db.collection('games')
-            .where('whiteUid', '==', APP.user.uid)
-            .where('blackUid', '==', data.to)
-            .orderBy('createdAt', 'desc')
-            .limit(1).get().then(gameSnap => {
-              if (!gameSnap.empty) {
-                joinFirestoreGame(gameSnap.docs[0].id, 'w');
-              }
-            }).catch(() => {});
+          showPage('play');
+          // Join the game that acceptor created, we are white
+          joinFirestoreGame(data.gameId, 'w');
         } else if (data.status === 'declined') {
           unsub();
-          showToast(`${APP.challengeTarget?.username || 'Opponent'} declined the challenge`, 'info');
+          showToast(`${targetUsername} declined the challenge`, 'info');
         }
       });
     APP.unsubscribes.push(unsub);
@@ -5043,32 +5313,44 @@ async function acceptIncomingChallenge() {
   const db = getDb();
   if (!db) return;
 
-  // Mark challenge as accepted
-  if (ch.reqId) {
-    await db.collection('challenges').doc(ch.reqId)
-      .update({ status: 'accepted' }).catch(() => {});
-  }
-
-  // Set TC and start online game
   APP.selectedTC = ch.tc || '5+0';
+  const tcData = getTimeMs(APP.selectedTC);
 
-  // Determine colors: challenger = white, acceptor = black
   showPage('play');
 
-  // Create game with challenger as white, acceptor (us) as black
   try {
-    const gameRef = await createFirestoreGame(ch.from, APP.user.uid, APP.user.username, APP.selectedTC);
-    // Override: challenger is white, we are black
-    await db.collection('games').doc(gameRef.id).update({
+    // Create game: challenger = white, acceptor = black
+    const gameRef = await db.collection('games').add({
       whiteUid: ch.from,
-      whiteUsername: ch.fromUsername,
+      whiteUsername: ch.fromUsername || 'Opponent',
       blackUid: APP.user.uid,
       blackUsername: APP.user.username,
+      tc: APP.selectedTC,
+      whiteTime: tcData.time,
+      blackTime: tcData.time,
+      increment: tcData.inc,
+      fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+      moves: [],
+      status: 'active',
+      activeColor: 'w',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastMoveAt: firebase.firestore.FieldValue.serverTimestamp(),
+      moveCount: 0,
+      challengeId: ch.reqId || null,
     });
+
+    // Mark challenge accepted with gameId so challenger can find it
+    if (ch.reqId) {
+      await db.collection('challenges').doc(ch.reqId)
+        .update({ status: 'accepted', gameId: gameRef.id }).catch(() => {});
+    }
+
+    // Acceptor joins as black
     joinFirestoreGame(gameRef.id, 'b');
     showToast(`Game started vs ${ch.fromUsername}!`, 'success');
   } catch(e) {
     showToast('Error starting game: ' + e.message, 'error');
+    console.error(e);
   }
 }
 
@@ -5479,12 +5761,6 @@ async function joinFirestoreGame(gameId, myColor) {
   const db = getDb();
   if (!db) return;
 
-  // Update game status to active
-  await db.collection('games').doc(gameId).update({
-    status: 'active',
-    startedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }).catch(()=>{});
-
   // Load game data
   const gameSnap = await db.collection('games').doc(gameId).get();
   const gameData = gameSnap.data();
@@ -5504,10 +5780,10 @@ async function joinFirestoreGame(gameId, myColor) {
     vsComputer: false,
     vsFirestore: true,
     firestoreGameId: gameId,
-    whiteTime: gameData.whiteTime,
-    blackTime: gameData.blackTime,
-    increment: gameData.increment,
-    activeTimer: 'w',
+    whiteTime: gameData.whiteTime || 300000,
+    blackTime: gameData.blackTime || 300000,
+    increment: gameData.increment || 0,
+    activeTimer: gameData.activeColor || 'w',
     timerRunning: true,
     moveCount: gameData.moveCount || 0,
     status: 'active',
@@ -5572,17 +5848,23 @@ async function joinFirestoreGame(gameId, myColor) {
       const serverMoves = data.moves || [];
       const localMoves = APP.game.engine.history.length;
       if (serverMoves.length > localMoves) {
-        // Apply opponent's move
-        const lastServerMove = serverMoves[serverMoves.length - 1];
-        if (lastServerMove && data.activeColor === APP.game.playerColor) {
-          const fromIdx = APP.game.engine.algToIdx(lastServerMove.from);
-          const toIdx = APP.game.engine.algToIdx(lastServerMove.to);
-          const result = APP.game.engine.move(fromIdx, toIdx, lastServerMove.promotion || 'Q');
+        // The last move in server was made by the opponent (not us)
+        // Apply all missing moves
+        for (let mi = localMoves; mi < serverMoves.length; mi++) {
+          const sm = serverMoves[mi];
+          if (!sm) continue;
+          // Determine who made this move: even index = white, odd = black
+          const movedColor = mi % 2 === 0 ? 'w' : 'b';
+          if (movedColor === APP.game.playerColor) continue; // skip our own (already applied)
+          const fromIdx = APP.game.engine.algToIdx(sm.from);
+          const toIdx = APP.game.engine.algToIdx(sm.to);
+          if (fromIdx === undefined || toIdx === undefined) continue;
+          const result = APP.game.engine.move(fromIdx, toIdx, sm.promotion || 'Q');
           if (result) {
             APP.game.lastMove = { from: fromIdx, to: toIdx };
-            APP.game.whiteTime = data.whiteTime;
-            APP.game.blackTime = data.blackTime;
-            APP.game.activeTimer = data.activeColor;
+            APP.game.whiteTime = data.whiteTime || APP.game.whiteTime;
+            APP.game.blackTime = data.blackTime || APP.game.blackTime;
+            APP.game.activeTimer = APP.game.engine.turn;
             updateMoveList(APP.game.engine.history);
             renderGameBoard();
             onMoveAccepted(result, APP.game.engine.status);
@@ -5610,10 +5892,10 @@ async function submitMoveToFirestore(fromAlg, toAlg, promotion, moveResult, engi
   const db = getDb();
   if (!db) return;
   const g = APP.game;
-  const newMove = { from: fromAlg, to: toAlg, notation: moveResult.notation };
+  const newMove = { from: fromAlg, to: toAlg, notation: moveResult.notation || '' };
   if (promotion) newMove.promotion = promotion;
   try {
-    await db.collection('games').doc(g.firestoreGameId).update({
+    const updateData = {
       moves: firebase.firestore.FieldValue.arrayUnion(newMove),
       fen: g.engine.getFen(),
       activeColor: g.engine.turn,
@@ -5621,10 +5903,18 @@ async function submitMoveToFirestore(fromAlg, toAlg, promotion, moveResult, engi
       blackTime: g.blackTime,
       lastMoveAt: firebase.firestore.FieldValue.serverTimestamp(),
       moveCount: firebase.firestore.FieldValue.increment(1),
-      ...(engineStatus !== 'active' ? { status: 'finished', endReason: engineStatus, winner: engineStatus === 'checkmate' ? (g.engine.turn === 'w' ? 'b' : 'w') : 'draw' } : {}),
-    });
+    };
+    if (engineStatus !== 'active') {
+      updateData.status = 'finished';
+      updateData.endReason = engineStatus;
+      updateData.winner = engineStatus === 'checkmate'
+        ? (g.engine.turn === 'w' ? 'b' : 'w')
+        : 'draw';
+    }
+    await db.collection('games').doc(g.firestoreGameId).update(updateData);
   } catch(e) {
     console.error('Move submit error:', e);
+    showToast('Move sync error — check connection', 'error');
   }
 }
 
@@ -5718,11 +6008,12 @@ window.handleSquareClick = function(idx) {
     }
   } else {
     if (g.legalSqs.includes(idx)) {
-      const fromAlg = engine.idxToAlg(g.selectedSq);
+      const fromSq = g.selectedSq;
+      const fromAlg = engine.idxToAlg(fromSq);
       const toAlg = engine.idxToAlg(idx);
-      const moveResult = engine.move(g.selectedSq, idx);
+      const moveResult = engine.move(fromSq, idx);
       if (moveResult) {
-        g.lastMove = { from: g.selectedSq, to: idx };
+        g.lastMove = { from: fromSq, to: idx };
         g.selectedSq = null; g.legalSqs = [];
         g.moveCount++;
         if (g.activeTimer === 'w') g.whiteTime += g.increment;
@@ -5731,7 +6022,7 @@ window.handleSquareClick = function(idx) {
         updateMoveList(engine.history);
         renderGameBoard();
         onMoveAccepted(moveResult, engine.status);
-        submitMoveToFirestore(fromAlg, toAlg, moveResult.promotion, moveResult, engine.status);
+        submitMoveToFirestore(fromAlg, toAlg, moveResult.promotion || null, moveResult, engine.status);
         if (engine.status !== 'active') endGame(engine.status, engine.winner);
       }
     } else if (piece && piece.color === engine.turn) {
@@ -5869,6 +6160,48 @@ function refreshCoursesIfNeeded() {
   if (APP.currentPage === 'learn') renderCoursesByCategory();
 }
 setTimeout(refreshCoursesIfNeeded, 100);
+
+
+// ── MOBILE NAV ──
+function toggleMobileNav() {
+  document.getElementById('mobile-nav-overlay').classList.toggle('open');
+}
+function closeMobileNav(e) {
+  if (!e || e.target === document.getElementById('mobile-nav-overlay')) {
+    document.getElementById('mobile-nav-overlay').classList.remove('open');
+  }
+}
+// Update mobile nav auth section when user state changes
+function updateMobileNavAuth() {
+  const el = document.getElementById('mobile-nav-auth');
+  if (!el) return;
+  if (APP.user) {
+    el.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+        <div class="player-avatar" style="width:36px;height:36px;font-size:0.9rem">${(APP.user.username||'?')[0].toUpperCase()}</div>
+        <div><div style="font-weight:600">${APP.user.username}</div><div style="font-size:0.75rem;color:var(--text-muted)">Rapid: ${APP.user.rapidRating||800}</div></div>
+      </div>
+      <button class="btn btn-outline" onclick="showPage('profile');closeMobileNav()">My Profile</button>
+      <button class="btn btn-ghost" onclick="logoutUser();closeMobileNav()">Sign Out</button>
+    `;
+  } else {
+    el.innerHTML = `
+      <button class="btn btn-outline" onclick="showPage('signin');closeMobileNav()">Sign In</button>
+      <button class="btn btn-primary" onclick="showPage('signup');closeMobileNav()">Create Account</button>
+    `;
+  }
+}
+
+// ── ACTIVE CLOCK HIGHLIGHT ──
+function updateActiveClockHighlight() {
+  if (!APP.game) return;
+  const cwEl = document.getElementById('clock-w');
+  const cbEl = document.getElementById('clock-b');
+  if (!cwEl || !cbEl) return;
+  const isWhiteTurn = APP.game.activeTimer === 'w';
+  cwEl.classList.toggle('active-turn', isWhiteTurn);
+  cbEl.classList.toggle('active-turn', !isWhiteTurn);
+}
 
 </script>
 
