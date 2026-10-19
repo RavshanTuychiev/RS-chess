@@ -6,42 +6,65 @@
 <title>RS.chess — Play. Learn. Improve.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-deepest: #080d14;
-  --bg-deep: #0d1520;
-  --bg-card: #111c2d;
-  --bg-card-hover: #162035;
-  --bg-elevated: #1a2740;
-  --bg-panel: #0f1a28;
-  --border: #1e3050;
-  --border-light: #253d5e;
-  --text-primary: #e8edf5;
-  --text-secondary: #7a95b8;
-  --text-muted: #4a6080;
-  --accent-teal: #00c9a7;
-  --accent-teal-dim: #007a67;
-  --accent-blue: #3b82f6;
-  --accent-cyan: #06b6d4;
-  --accent-green: #22c55e;
-  --accent-red: #ef4444;
-  --accent-yellow: #f59e0b;
-  --accent-orange: #f97316;
-  --accent-purple: #a855f7;
-  --rating-rapid: #22c55e;
-  --rating-blitz: #f59e0b;
-  --board-light: #e8dcc8;
-  --board-dark: #6b8fa6;
+  /* ── Surface palette ── */
+  --bg-deepest:    #070A10;
+  --bg-deep:       #0B1020;
+  --bg-card:       #111B2D;
+  --bg-card-hover: #16243B;
+  --bg-elevated:   #1A2E47;
+  --bg-panel:      #0E1828;
+  --bg-glass:      rgba(17,27,45,0.85);
+
+  /* ── Borders ── */
+  --border:        #1C2E48;
+  --border-light:  #253D5E;
+  --border-glow:   rgba(0,214,181,0.35);
+
+  /* ── Text ── */
+  --text-primary:   #F4F7FC;
+  --text-secondary: #9BAECC;
+  --text-muted:     #4E6680;
+  --text-gold:      #E7B94F;
+
+  /* ── Brand accents ── */
+  --accent-teal:     #00D6B5;
+  --accent-teal-dim: #008C78;
+  --accent-cyan:     #11CBEA;
+  --accent-gold:     #E7B94F;
+  --accent-gold-dim: #A07D2A;
+  --accent-blue:     #3D8EF5;
+  --accent-green:    #22D47A;
+  --accent-red:      #F04E5E;
+  --accent-yellow:   #F5A623;
+  --accent-orange:   #F97316;
+  --accent-purple:   #9B6DFF;
+
+  /* ── Rating colors ── */
+  --rating-rapid: #22D47A;
+  --rating-blitz: #F5A623;
+
+  /* ── Board ── */
+  --board-light: #ccdae0;
+  --board-dark:  #80a1b5;
   --board-light-alt: #f0d9b5;
-  --board-dark-alt: #b58863;
-  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
-  --shadow-glow-teal: 0 0 20px rgba(0,201,167,0.2);
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --board-dark-alt:  #b58863;
+
+  /* ── Shadows ── */
+  --shadow-card:   0 8px 32px rgba(0,0,0,0.55);
+  --shadow-lg:     0 16px 48px rgba(0,0,0,0.65);
+  --shadow-glow-teal: 0 0 28px rgba(0,214,181,0.22);
+  --shadow-glow-gold: 0 0 24px rgba(231,185,79,0.2);
+
+  /* ── Radii ── */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  --nav-height: 60px;
+  --nav-height: 62px;
   color-scheme: dark;
 }
 
@@ -1531,6 +1554,1019 @@ body { overflow-x: hidden; }
   #home-page .section:last-of-type { margin: 0 12px 32px !important; padding: 32px 20px !important; }
 }
 
+
+/* ═══════════════════════════════════════════════════════════════
+   RS.CHESS — PREMIUM DESIGN SYSTEM
+   Full visual transformation: animations, typography, components
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── ANIMATION SYSTEM ─────────────────────────────────────────── */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur-normal: 220ms;
+  --dur-slow: 380ms;
+  --dur-page: 280ms;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(0,214,181,0); }
+  50%      { box-shadow: 0 0 0 8px rgba(0,214,181,0.12); }
+}
+@keyframes borderFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes floatY {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes boardReveal {
+  from { opacity: 0; transform: perspective(600px) rotateX(12deg) scale(0.94); }
+  to   { opacity: 1; transform: perspective(600px) rotateX(0deg) scale(1); }
+}
+@keyframes navIndicator {
+  from { width: 0; opacity: 0; }
+  to   { width: 100%; opacity: 1; }
+}
+@keyframes toastSlide {
+  from { opacity: 0; transform: translateX(110%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(110%); }
+}
+@keyframes spinSmooth {
+  to { transform: rotate(360deg); }
+}
+@keyframes progressFill {
+  from { width: 0; }
+}
+@keyframes achievementPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes particleDrift {
+  0%   { transform: translate(0,0) rotate(0deg); opacity: 0.6; }
+  100% { transform: translate(var(--px,20px), var(--py,-60px)) rotate(var(--pr,180deg)); opacity: 0; }
+}
+
+/* ── PAGE TRANSITIONS ──────────────────────────────────────────── */
+.page { animation: none; }
+.page.entering {
+  animation: fadeUp var(--dur-page) var(--ease-out-expo) both;
+}
+.page-slide-right.entering {
+  animation: slideInRight var(--dur-page) var(--ease-out-expo) both;
+}
+
+/* ── STAGGER UTILITIES ─────────────────────────────────────────── */
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 60ms; }
+.stagger-3 { animation-delay: 120ms; }
+.stagger-4 { animation-delay: 180ms; }
+.stagger-5 { animation-delay: 240ms; }
+.stagger-6 { animation-delay: 300ms; }
+
+/* ── PREMIUM NAV ───────────────────────────────────────────────── */
+#nav {
+  background: rgba(7,10,16,0.96) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(28,46,72,0.8) !important;
+  height: 62px !important;
+}
+
+.nav-logo {
+  font-size: 1.35rem !important;
+  letter-spacing: -0.02em;
+}
+
+.logo-icon {
+  background: linear-gradient(135deg, var(--accent-teal), var(--accent-cyan)) !important;
+  box-shadow: 0 0 16px rgba(0,214,181,0.35);
+  transition: box-shadow var(--dur-normal) var(--ease-out-quart),
+              transform var(--dur-normal) var(--ease-spring);
+}
+.nav-logo:hover .logo-icon {
+  box-shadow: 0 0 24px rgba(0,214,181,0.5);
+  transform: rotate(-5deg) scale(1.08);
+}
+
+.nav-link {
+  position: relative;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  transition: color var(--dur-fast) ease,
+              background var(--dur-fast) ease !important;
+}
+.nav-link::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 50%; right: 50%;
+  height: 2px; background: var(--accent-teal);
+  transition: left var(--dur-normal) var(--ease-out-expo),
+              right var(--dur-normal) var(--ease-out-expo);
+  border-radius: 1px;
+}
+.nav-link.active::after { left: 8px; right: 8px; }
+.nav-link.active {
+  color: var(--accent-teal) !important;
+  background: rgba(0,214,181,0.06) !important;
+}
+.nav-link:hover:not(.active)::after { left: 25%; right: 25%; }
+
+/* ── PREMIUM BUTTONS ───────────────────────────────────────────── */
+.btn {
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  transition:
+    background var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-normal) ease !important;
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+.btn:active::after { opacity: 1; }
+.btn:active { transform: scale(0.97) !important; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-cyan) 100%) !important;
+  color: #070A10 !important;
+  box-shadow: 0 4px 14px rgba(0,214,181,0.3);
+  border: none !important;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(0,214,181,0.45) !important;
+  transform: translateY(-1px) !important;
+}
+.btn-primary:active { transform: translateY(0) scale(0.98) !important; }
+
+.btn-green {
+  background: linear-gradient(135deg, #1DB970, #16A35F) !important;
+  box-shadow: 0 4px 14px rgba(29,185,112,0.3);
+}
+.btn-green:hover {
+  box-shadow: 0 6px 20px rgba(29,185,112,0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-outline {
+  border: 1px solid var(--border-light) !important;
+  background: transparent !important;
+  backdrop-filter: blur(4px);
+}
+.btn-outline:hover {
+  border-color: var(--accent-teal) !important;
+  color: var(--accent-teal) !important;
+  background: rgba(0,214,181,0.06) !important;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--accent-red), #C73B49) !important;
+  box-shadow: 0 4px 14px rgba(240,78,94,0.25);
+}
+
+/* ── PREMIUM CARDS ─────────────────────────────────────────────── */
+.card, .side-panel, .feature-card, .course-card, .tournament-card {
+  transition:
+    border-color var(--dur-normal) ease,
+    box-shadow var(--dur-normal) ease,
+    transform var(--dur-normal) var(--ease-out-quart),
+    background var(--dur-normal) ease !important;
+}
+
+.card:hover:not(.no-hover) {
+  border-color: var(--border-light) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45) !important;
+  transform: translateY(-3px) !important;
+}
+
+.feature-card {
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(17,27,45,0.8) 100%) !important;
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-normal) ease;
+}
+.feature-card:hover::before { opacity: 0.6; }
+.feature-card:hover {
+  border-color: rgba(0,214,181,0.25) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,214,181,0.1) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* ── PREMIUM HERO ──────────────────────────────────────────────── */
+#home-page {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 45%, rgba(0,214,181,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 15%, rgba(17,203,234,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 50% 95%, rgba(155,109,255,0.04) 0%, transparent 50%),
+    #070A10 !important;
+}
+
+.hero {
+  position: relative;
+  min-height: calc(100vh - 62px);
+  padding: clamp(40px,6vw,80px) clamp(20px,8vw,100px) !important;
+}
+
+/* Animated grid background for hero */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(28,46,72,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28,46,72,0.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero > * { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  background: rgba(0,214,181,0.08) !important;
+  border: 1px solid rgba(0,214,181,0.25) !important;
+  color: var(--accent-teal) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  animation: fadeUp 0.6s var(--ease-out-expo) 0.1s both;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.03em !important;
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.2s both;
+}
+
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--accent-teal), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.hero h1 .accent-blue {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-desc {
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
+  color: var(--text-secondary) !important;
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.3s both;
+}
+
+.hero-ctas {
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.4s both;
+}
+
+.hero-stats {
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.5s both;
+}
+
+.hero-stat-num {
+  font-size: 1.7rem !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-right {
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.3s both;
+}
+
+/* ── MINI BOARD PREMIUM ──────────────────────────────────────────── */
+.mini-board-container {
+  background: linear-gradient(145deg, var(--bg-card), rgba(17,27,45,0.9)) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-teal) !important;
+  animation: boardReveal 1s var(--ease-out-expo) 0.5s both;
+  position: relative; overflow: visible;
+}
+.mini-board-container::before {
+  content: '';
+  position: absolute; inset: -1px;
+  background: linear-gradient(135deg, rgba(0,214,181,0.3), transparent, rgba(17,203,234,0.2));
+  border-radius: 17px; z-index: -1;
+}
+
+/* ── QUICK PLAY PREMIUM ───────────────────────────────────────────── */
+.quick-play {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-card) !important;
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.6s both;
+}
+
+.tc-btn {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  transition: all var(--dur-normal) var(--ease-out-quart) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.tc-btn:hover {
+  border-color: rgba(0,214,181,0.4) !important;
+  background: rgba(0,214,181,0.06) !important;
+  transform: translateY(-1px);
+}
+.tc-btn.selected {
+  background: rgba(0,214,181,0.12) !important;
+  border-color: var(--accent-teal) !important;
+  color: var(--accent-teal) !important;
+  box-shadow: 0 0 12px rgba(0,214,181,0.15) !important;
+}
+.tc-btn .tc-time { font-size: 1.05rem !important; font-weight: 800 !important; }
+
+/* ── FEATURE CARDS GRID PREMIUM ──────────────────────────────────── */
+.fi-green  { background: rgba(34,212,122,0.1) !important; }
+.fi-teal   { background: rgba(0,214,181,0.1) !important; }
+.fi-blue   { background: rgba(61,142,245,0.1) !important; }
+.fi-yellow { background: rgba(245,166,35,0.1) !important; }
+.fi-red    { background: rgba(240,78,94,0.1) !important; }
+.fi-purple { background: rgba(155,109,255,0.1) !important; }
+
+.feature-card .feature-arrow {
+  color: var(--accent-teal); opacity: 0;
+  transform: translateX(-4px);
+  transition: all var(--dur-normal) var(--ease-out-expo);
+  margin-top: auto; font-size: 1.1rem;
+}
+.feature-card:hover .feature-arrow {
+  opacity: 1; transform: translateX(0);
+}
+
+/* ── SECTION ENTRANCES ────────────────────────────────────────────── */
+.section {
+  animation: fadeUp 0.6s var(--ease-out-expo) both;
+}
+
+.section-title {
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── COURSE CARDS PREMIUM ─────────────────────────────────────────── */
+.course-card {
+  border-radius: 14px !important;
+  overflow: hidden;
+}
+.course-card:hover {
+  box-shadow: 0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,214,181,0.2) !important;
+  transform: translateY(-5px) !important;
+}
+.course-card-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+.course-card-img { position: relative; overflow: hidden; }
+.course-card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+}
+
+/* ── CLOCK PREMIUM ────────────────────────────────────────────────── */
+.clock {
+  font-family: 'Space Grotesk', monospace !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 5px 12px !important;
+  letter-spacing: 0.04em;
+  transition: all var(--dur-normal) ease !important;
+}
+.clock.active-turn {
+  background: rgba(0,214,181,0.12) !important;
+  border-color: var(--accent-teal) !important;
+  color: var(--accent-teal) !important;
+  box-shadow: 0 0 12px rgba(0,214,181,0.2) !important;
+}
+.clock.low-time {
+  background: rgba(240,78,94,0.15) !important;
+  border-color: var(--accent-red) !important;
+  color: var(--accent-red) !important;
+  animation: pulse 0.8s ease infinite !important;
+}
+
+/* ── PLAYER AVATAR PREMIUM ────────────────────────────────────────── */
+.player-avatar {
+  background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card)) !important;
+  border: 2px solid var(--border-light) !important;
+  transition: all var(--dur-normal) ease;
+  font-weight: 700 !important;
+}
+
+/* ── PROFILE PAGE PREMIUM ─────────────────────────────────────────── */
+.profile-cover {
+  height: 180px !important;
+  background:
+    linear-gradient(135deg, rgba(0,214,181,0.15) 0%, rgba(17,203,234,0.08) 50%, rgba(155,109,255,0.1) 100%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231C2E48' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+  position: relative !important; overflow: hidden !important;
+}
+.profile-cover::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(transparent, var(--bg-deepest));
+}
+
+.profile-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.profile-avatar {
+  border: 3px solid var(--accent-teal) !important;
+  box-shadow: 0 0 24px rgba(0,214,181,0.3) !important;
+  font-size: 2.8rem !important;
+}
+
+.rating-card {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated)) !important;
+  border: 1px solid var(--border) !important;
+  transition: all var(--dur-normal) ease !important;
+}
+.rating-card:hover {
+  border-color: var(--border-light) !important;
+  transform: translateY(-2px);
+}
+.rating-card-val {
+  font-size: 1.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.profile-tab {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  transition: all var(--dur-normal) ease !important;
+  white-space: nowrap;
+}
+.profile-tab.active {
+  color: var(--accent-teal) !important;
+  border-bottom-color: var(--accent-teal) !important;
+}
+
+/* ── GAME HISTORY PREMIUM ─────────────────────────────────────────── */
+.game-history-row {
+  transition: all var(--dur-normal) var(--ease-out-quart) !important;
+  border-radius: var(--radius-md) !important;
+}
+.game-history-row:hover {
+  border-color: var(--border-light) !important;
+  background: var(--bg-card-hover) !important;
+  transform: translateX(4px) !important;
+}
+.game-result-badge {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 800 !important;
+  font-size: 0.75rem !important;
+}
+.gr-win  { background: linear-gradient(135deg, #1DB970, #16A35F) !important; }
+.gr-loss { background: linear-gradient(135deg, #F04E5E, #C73B49) !important; }
+.gr-draw { background: linear-gradient(135deg, var(--text-muted), #3A5068) !important; }
+
+/* ── LEADERBOARD PREMIUM ──────────────────────────────────────────── */
+.leaderboard-table th {
+  background: rgba(17,27,45,0.8) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+}
+.leaderboard-table tr:hover td {
+  background: rgba(0,214,181,0.04) !important;
+}
+.rank-1 { background: linear-gradient(135deg, #E7B94F, #C9981A) !important; }
+.rank-2 { background: linear-gradient(135deg, #B8C4CC, #8A9BA5) !important; }
+.rank-3 { background: linear-gradient(135deg, #C97B3B, #A55F28) !important; }
+
+/* ── TOURNAMENT CARDS PREMIUM ─────────────────────────────────────── */
+.tournament-card {
+  background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-panel) 100%) !important;
+  position: relative; overflow: hidden;
+}
+.tournament-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);
+  opacity: 0; transition: opacity var(--dur-normal) ease;
+}
+.tournament-card:hover::before { opacity: 1; }
+.tournament-card:hover {
+  box-shadow: 0 20px 56px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,214,181,0.15) !important;
+}
+
+/* ── FRIENDS PREMIUM ──────────────────────────────────────────────── */
+.friend-item {
+  border-radius: var(--radius-md) !important;
+  transition: all var(--dur-normal) var(--ease-out-quart) !important;
+}
+.friend-item:hover {
+  border-color: var(--border-light) !important;
+  background: var(--bg-card-hover) !important;
+  transform: translateX(3px) !important;
+}
+
+/* ── NOTIFICATIONS PREMIUM ────────────────────────────────────────── */
+.notif-bell {
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--dur-normal) var(--ease-spring) !important;
+}
+.notif-bell:hover {
+  border-color: var(--accent-teal) !important;
+  background: rgba(0,214,181,0.08) !important;
+  transform: rotate(12deg) scale(1.1);
+}
+
+.notif-dropdown {
+  border: 1px solid var(--border-light) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,214,181,0.08) !important;
+  animation: scaleIn 0.2s var(--ease-out-expo) both !important;
+  transform-origin: top right;
+}
+.notif-item {
+  transition: background var(--dur-fast) ease !important;
+}
+.notif-item.unread { background: rgba(0,214,181,0.04) !important; }
+.notif-item:hover { background: rgba(0,214,181,0.08) !important; }
+
+/* ── MODALS PREMIUM ───────────────────────────────────────────────── */
+.modal-box {
+  animation: scaleIn 0.25s var(--ease-out-expo) both !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(0,0,0,0.6) !important;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+}
+
+.matchmaking-box {
+  border-radius: 20px !important;
+  border: 1px solid var(--border-light) !important;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-teal) !important;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+}
+.mm-spinner {
+  border-color: var(--border) !important;
+  border-top-color: var(--accent-teal) !important;
+  animation: spinSmooth 0.9s linear infinite !important;
+}
+
+/* ── FORM INPUTS PREMIUM ──────────────────────────────────────────── */
+.form-input {
+  background: rgba(17,27,45,0.8) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  transition: border-color var(--dur-normal) ease,
+              box-shadow var(--dur-normal) ease !important;
+  font-size: 0.9rem !important;
+}
+.form-input:focus {
+  border-color: var(--accent-teal) !important;
+  box-shadow: 0 0 0 3px rgba(0,214,181,0.12), 0 0 0 1px var(--accent-teal) !important;
+  outline: none !important;
+}
+.form-label {
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ── AUTH PAGES PREMIUM ───────────────────────────────────────────── */
+.auth-box {
+  border: 1px solid var(--border-light) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(11,16,32,0.9) 100%) !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,214,181,0.08) !important;
+  animation: scaleIn 0.4s var(--ease-out-expo) both !important;
+}
+.auth-title {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+.btn-google {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--dur-normal) ease !important;
+}
+.btn-google:hover {
+  background: rgba(255,255,255,0.09) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+  transform: translateY(-1px) !important;
+}
+.auth-divider {
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ── PUZZLE PAGE PREMIUM ──────────────────────────────────────────── */
+.puzzle-status {
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  border: 1px solid transparent;
+}
+.ps-find { background: rgba(61,142,245,0.1) !important; border-color: rgba(61,142,245,0.2) !important; color: var(--accent-blue) !important; }
+.ps-correct { background: rgba(34,212,122,0.1) !important; border-color: rgba(34,212,122,0.2) !important; color: var(--accent-green) !important; }
+.ps-wrong { background: rgba(240,78,94,0.1) !important; border-color: rgba(240,78,94,0.2) !important; color: var(--accent-red) !important; }
+
+.difficulty-badge {
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  border: 1px solid transparent !important;
+}
+.diff-easy   { background: rgba(34,212,122,0.1) !important; color: var(--accent-green) !important; border-color: rgba(34,212,122,0.2) !important; }
+.diff-medium { background: rgba(245,166,35,0.1) !important; color: var(--accent-yellow) !important; border-color: rgba(245,166,35,0.2) !important; }
+.diff-hard   { background: rgba(240,78,94,0.1) !important; color: var(--accent-red) !important; border-color: rgba(240,78,94,0.2) !important; }
+
+/* ── SIDE PANEL PREMIUM ───────────────────────────────────────────── */
+.side-panel {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+}
+.side-panel-title {
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--text-muted) !important;
+  margin-bottom: 14px !important;
+}
+
+/* ── LEARN PAGE PREMIUM ───────────────────────────────────────────── */
+.learn-hero {
+  background: linear-gradient(160deg, rgba(0,214,181,0.06) 0%, rgba(17,27,45,0.5) 40%, transparent 100%),
+    var(--bg-deep) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.learn-hero h1 {
+  font-size: 2.4rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.pill {
+  border-radius: 20px !important;
+  transition: all var(--dur-normal) var(--ease-out-quart) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+.pill:hover { transform: translateY(-1px) !important; }
+.pill.active {
+  background: rgba(0,214,181,0.12) !important;
+  border-color: var(--accent-teal) !important;
+  color: var(--accent-teal) !important;
+  box-shadow: 0 4px 12px rgba(0,214,181,0.15) !important;
+}
+
+/* ── GAME BOARD PREMIUM ───────────────────────────────────────────── */
+.game-board-wrap {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 14px !important;
+}
+
+/* ── COURSE PAGE PREMIUM ──────────────────────────────────────────── */
+.lesson-item {
+  transition: all var(--dur-normal) var(--ease-out-quart) !important;
+  border-radius: var(--radius-sm) !important;
+  margin: 2px 8px;
+}
+.lesson-item:hover { background: rgba(0,214,181,0.06) !important; }
+.lesson-item.active {
+  background: rgba(0,214,181,0.1) !important;
+  border-left-color: var(--accent-teal) !important;
+}
+.lesson-type-tag {
+  background: rgba(0,214,181,0.1) !important;
+  color: var(--accent-teal) !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* ── BADGE SYSTEM PREMIUM ─────────────────────────────────────────── */
+.course-badge { border-radius: 6px !important; font-weight: 700 !important; font-size: 0.68rem !important; letter-spacing: 0.04em !important; }
+.badge-white  { background: rgba(61,142,245,0.1) !important; color: #5BA8FF !important; border: 1px solid rgba(61,142,245,0.2) !important; }
+.badge-black  { background: rgba(155,109,255,0.1) !important; color: #A87BFF !important; border: 1px solid rgba(155,109,255,0.2) !important; }
+.badge-beginner { background: rgba(34,212,122,0.1) !important; color: var(--accent-green) !important; border: 1px solid rgba(34,212,122,0.2) !important; }
+.badge-tactics  { background: rgba(240,78,94,0.1) !important; color: var(--accent-red) !important; border: 1px solid rgba(240,78,94,0.2) !important; }
+.badge-endgame  { background: rgba(245,166,35,0.1) !important; color: var(--accent-yellow) !important; border: 1px solid rgba(245,166,35,0.2) !important; }
+
+/* ── WDL BAR PREMIUM ──────────────────────────────────────────────── */
+.wdl-bar { height: 8px !important; border-radius: 4px !important; gap: 3px !important; overflow: hidden; }
+.wdl-win  { background: linear-gradient(90deg, #1DB970, #22D47A) !important; border-radius: 4px !important; }
+.wdl-draw { background: linear-gradient(90deg, var(--text-muted), #5A7090) !important; border-radius: 4px !important; }
+.wdl-loss { background: linear-gradient(90deg, #C73B49, #F04E5E) !important; border-radius: 4px !important; }
+
+/* ── ACHIEVEMENT TILES PREMIUM ────────────────────────────────────── */
+.achievement-tile {
+  border-radius: var(--radius-md) !important;
+  transition: all var(--dur-normal) var(--ease-spring) !important;
+  border: 1px solid var(--border) !important;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated)) !important;
+}
+.achievement-tile.unlocked {
+  border-color: rgba(0,214,181,0.3) !important;
+  box-shadow: 0 4px 16px rgba(0,214,181,0.1) !important;
+}
+.achievement-tile.unlocked:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 8px 24px rgba(0,214,181,0.2) !important;
+}
+
+/* ── TOAST PREMIUM ────────────────────────────────────────────────── */
+.toast {
+  background: linear-gradient(145deg, var(--bg-elevated), var(--bg-card)) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5) !important;
+  animation: toastSlide 0.3s var(--ease-out-expo) both !important;
+  font-size: 0.85rem !important;
+}
+.toast-success { border-left: 3px solid var(--accent-green) !important; }
+.toast-error   { border-left: 3px solid var(--accent-red) !important; }
+.toast-info    { border-left: 3px solid var(--accent-teal) !important; }
+
+/* ── STAT BOXES PREMIUM ───────────────────────────────────────────── */
+.stat-box {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated)) !important;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border) !important;
+  transition: all var(--dur-normal) ease !important;
+}
+.stat-box:hover {
+  border-color: var(--border-light) !important;
+  transform: translateY(-2px) !important;
+}
+.stat-box-num {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── RATING GRAPH ──────────────────────────────────────────────────── */
+.rating-graph {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+/* ── TABS PREMIUM ─────────────────────────────────────────────────── */
+.tab-btn {
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.01em !important;
+  transition: all var(--dur-normal) ease !important;
+  position: relative;
+}
+.tab-btn.active { color: var(--accent-teal) !important; border-bottom-color: var(--accent-teal) !important; }
+.tab-btn:hover:not(.active) { color: var(--text-primary) !important; }
+
+/* ── SCROLLBAR UPGRADE ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── ONLINE BADGE PREMIUM ──────────────────────────────────────────── */
+.online-badge {
+  background: rgba(34,212,122,0.08) !important;
+  border-color: rgba(34,212,122,0.2) !important;
+  color: var(--accent-green) !important;
+  font-weight: 700 !important;
+}
+
+/* ── FOUNDER CARDS PREMIUM ─────────────────────────────────────────── */
+.founder-card {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-panel)) !important;
+  border: 1px solid var(--border) !important;
+  transition: all var(--dur-slow) var(--ease-out-quart) !important;
+}
+.founder-card:hover {
+  border-color: rgba(0,214,181,0.35) !important;
+  box-shadow: 0 20px 56px rgba(0,0,0,0.5), var(--shadow-glow-teal) !important;
+  transform: translateY(-4px) !important;
+}
+.fa-r { background: linear-gradient(135deg, #0B2040, #071428) !important; }
+.fa-s { background: linear-gradient(135deg, #200A40, #120620) !important; }
+
+/* ── FOOTER PREMIUM ────────────────────────────────────────────────── */
+footer {
+  background: linear-gradient(180deg, var(--bg-deep), #040608) !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+/* ── SEARCH BOX PREMIUM ────────────────────────────────────────────── */
+.search-box {
+  background: rgba(17,27,45,0.8) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: border-color var(--dur-normal) ease !important;
+}
+.search-box:focus-within {
+  border-color: var(--accent-teal) !important;
+  box-shadow: 0 0 0 3px rgba(0,214,181,0.1) !important;
+}
+
+/* ── MOVE LIST PREMIUM ─────────────────────────────────────────────── */
+.move-cell {
+  border-radius: 4px !important;
+  transition: all var(--dur-fast) ease !important;
+  font-weight: 600 !important;
+}
+.move-cell:hover { background: rgba(0,214,181,0.1) !important; }
+.move-cell.current {
+  background: rgba(0,214,181,0.15) !important;
+  color: var(--accent-teal) !important;
+  box-shadow: 0 0 8px rgba(0,214,181,0.1) !important;
+}
+
+/* ── PRESENCE DOTS PREMIUM ─────────────────────────────────────────── */
+.presence-dot { transition: all var(--dur-normal) ease; }
+.presence-online { background: #22D47A !important; box-shadow: 0 0 6px rgba(34,212,122,0.6); }
+.presence-ingame { background: var(--accent-yellow) !important; box-shadow: 0 0 6px rgba(245,166,35,0.5); }
+.presence-offline { background: var(--text-muted) !important; }
+
+/* ── SOUND TOGGLE PREMIUM ──────────────────────────────────────────── */
+.sound-toggle {
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--dur-normal) var(--ease-spring) !important;
+}
+.sound-toggle:hover {
+  border-color: var(--accent-teal) !important;
+  color: var(--accent-teal) !important;
+  transform: scale(1.05) !important;
+}
+
+/* ── MOBILE MENU PREMIUM ───────────────────────────────────────────── */
+.nav-mobile-overlay {
+  background: rgba(7,10,16,0.98) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.nav-mobile-overlay .nav-link {
+  font-size: 1rem !important;
+  padding: 16px 20px !important;
+  border-radius: var(--radius-md) !important;
+  border-bottom: 1px solid rgba(28,46,72,0.5) !important;
+  transition: all var(--dur-normal) ease !important;
+}
+.nav-mobile-overlay .nav-link:hover {
+  background: rgba(0,214,181,0.08) !important;
+  color: var(--accent-teal) !important;
+  padding-left: 28px !important;
+}
+
+/* ── SEEK PULSE PREMIUM ────────────────────────────────────────────── */
+.seek-pulse {
+  border: 2px solid var(--accent-teal) !important;
+  box-shadow: 0 0 0 0 rgba(0,214,181,0.4) !important;
+}
+@keyframes seekPulse {
+  0%  { transform: scale(1);    box-shadow: 0 0 0 0   rgba(0,214,181,0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 0 20px rgba(0,214,181,0); }
+  100%{ transform: scale(1);    box-shadow: 0 0 0 0   rgba(0,214,181,0); }
+}
+
+/* ── PLAY STATUS BAR PREMIUM ───────────────────────────────────────── */
+.play-status-bar {
+  background: rgba(17,27,45,0.7) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* ── DRAW OFFER BANNER ──────────────────────────────────────────────── */
+.draw-offer-banner {
+  background: rgba(245,166,35,0.08) !important;
+  border: 1px solid rgba(245,166,35,0.25) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--accent-yellow) !important;
+}
+
+/* ── VERIFY BANNER ──────────────────────────────────────────────────── */
+.verify-banner {
+  background: rgba(245,166,35,0.08) !important;
+  border-color: rgba(245,166,35,0.25) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ── PW STRENGTH PREMIUM ────────────────────────────────────────────── */
+.pw-strength { height: 4px !important; border-radius: 2px !important; }
+.pw-strength.weak   { background: linear-gradient(90deg, var(--accent-red), #C73B49) !important; }
+.pw-strength.fair   { background: linear-gradient(90deg, var(--accent-yellow), #D4891B) !important; }
+.pw-strength.good   { background: linear-gradient(90deg, var(--accent-teal), var(--accent-cyan)) !important; }
+.pw-strength.strong { background: linear-gradient(90deg, var(--accent-green), #1DB970) !important; }
+
+/* ── INLINE CHESS BOARD COORD COLORS (icy sea theme) ───────────────── */
+.sq.light .coord { color: rgba(100,138,160,0.8) !important; }
+.sq.dark  .coord { color: rgba(200,218,228,0.7) !important; }
+
+/* ── FOCUS RING SYSTEM ──────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--accent-teal) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero::before { display: none; }
+}
+
+
+.quick-action-item:hover {
+  background: var(--bg-elevated) !important;
+}
+.quick-action-item:hover > div:first-child {
+  transform: scale(1.08);
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+@media (max-width: 768px) {
+  .quick-action-item { padding: 14px 16px !important; }
+}
+@media (max-width: 600px) {
+  #home-page [style*="grid-template-columns:repeat(4"] {
+    grid-template-columns: repeat(2,1fr) !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1647,29 +2683,30 @@ body { overflow-x: hidden; }
   <div class="hero">
     <div class="hero-left">
       <div class="hero-eyebrow">
-        <span class="online-dot"></span> Online Chess Platform
+        <span class="online-dot"></span> Premium Chess Platform · Built in Uzbekistan
       </div>
       <h1>
-        Play Chess.<br>
-        <span class="accent">Learn.</span><br>
-        <span class="accent-blue">Improve Together.</span>
+        The Chess<br>
+        Platform Built<br>
+        <span class="accent">For Champions.</span>
       </h1>
       <p class="hero-desc">
-        A modern chess platform built by two young players from Uzbekistan.
-        Play worldwide, solve puzzles, study structured courses — all in one place.
+        Play rated games worldwide, master tactical puzzles,
+        and study premium chess courses — all in one platform
+        built by passionate players for passionate players.
       </p>
       <div class="hero-ctas">
-        <button class="btn btn-primary btn-xl" onclick="showPage('play')">▶ Play Now</button>
-        <button class="btn btn-outline btn-xl" onclick="showPage('learn')">Learn Chess</button>
+        <button class="btn btn-primary btn-xl" onclick="showPage('play')" style="padding:14px 32px;font-size:1rem;gap:8px">⚡ Play Now</button>
+        <button class="btn btn-outline btn-xl" onclick="showPage('learn')" style="padding:14px 32px;font-size:1rem">📚 Explore Courses</button>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <div class="hero-stat-num">250+</div>
-          <div class="hero-stat-label">Puzzles</div>
+          <div class="hero-stat-num" data-count="250">250+</div>
+          <div class="hero-stat-label">Tactical Puzzles</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num">20+</div>
-          <div class="hero-stat-label">Courses</div>
+          <div class="hero-stat-num" data-count="20">20+</div>
+          <div class="hero-stat-label">Chess Courses</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-num">Free</div>
@@ -1718,10 +2755,32 @@ body { overflow-x: hidden; }
     </div>
   </div>
 
+
+  <!-- Quick Actions Bar -->
+  <div style="background:linear-gradient(90deg,var(--bg-deep),var(--bg-panel),var(--bg-deep));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)">
+      <div onclick="showPage('play')" style="background:var(--bg-deep);padding:20px 24px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px" class="quick-action-item">
+        <div style="width:44px;height:44px;background:rgba(0,214,181,0.1);border:1px solid rgba(0,214,181,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">⚡</div>
+        <div><div style="font-weight:700;font-size:0.9rem">Play Online</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Find an opponent</div></div>
+      </div>
+      <div onclick="showPage('puzzles')" style="background:var(--bg-deep);padding:20px 24px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px" class="quick-action-item">
+        <div style="width:44px;height:44px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🧩</div>
+        <div><div style="font-weight:700;font-size:0.9rem">Solve Puzzles</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Train tactics</div></div>
+      </div>
+      <div onclick="showPage('learn')" style="background:var(--bg-deep);padding:20px 24px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px" class="quick-action-item">
+        <div style="width:44px;height:44px;background:rgba(61,142,245,0.1);border:1px solid rgba(61,142,245,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">📚</div>
+        <div><div style="font-weight:700;font-size:0.9rem">Study Courses</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Structured learning</div></div>
+      </div>
+      <div onclick="showPage('tournaments')" style="background:var(--bg-deep);padding:20px 24px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px" class="quick-action-item">
+        <div style="width:44px;height:44px;background:rgba(231,185,79,0.1);border:1px solid rgba(231,185,79,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🏆</div>
+        <div><div style="font-weight:700;font-size:0.9rem">Tournaments</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Compete & rank up</div></div>
+      </div>
+    </div>
+  </div>
   <!-- Feature cards -->
   <div class="section">
     <div class="section-header">
-      <h2 class="section-title">Everything you need to improve</h2>
+      <h2 class="section-title">Everything you need to <span style="color:var(--accent-teal)">master chess</span></h2>
     </div>
     <div class="cards-grid cards-grid-4">
       <div class="feature-card" onclick="showPage('play')">
@@ -1814,10 +2873,11 @@ body { overflow-x: hidden; }
   </div>
 
   <!-- About / Founders -->
-  <div class="section" style="background:var(--bg-deep);border-radius:var(--radius-xl);margin:0 24px 40px;padding:48px">
+  <div class="section" style="background:linear-gradient(145deg,var(--bg-deep),var(--bg-panel));border-radius:var(--radius-xl);margin:0 24px 40px;padding:48px;border:1px solid var(--border)">
     <div style="text-align:center;margin-bottom:36px">
-      <h2 style="font-size:2rem;margin-bottom:10px">Built by two young chess players.</h2>
-      <p style="color:var(--text-secondary);font-size:1rem">Designed for a world of thinkers.</p>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(231,185,79,0.1);border:1px solid rgba(231,185,79,0.25);color:var(--accent-gold);padding:5px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px">♟ Our Story</div>
+      <h2 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px">Built by two young <span style="color:var(--accent-teal)">chess players.</span></h2>
+      <p style="color:var(--text-secondary);font-size:1rem;max-width:480px;margin:0 auto">Designed for a world of thinkers. We built the platform we always wanted.</p>
     </div>
     <div class="founder-cards">
       <div class="founder-card">
@@ -1849,11 +2909,15 @@ body { overflow-x: hidden; }
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="nav-logo" style="cursor:default;margin:0 0 10px">
+        <div class="nav-logo" style="cursor:default;margin:0 0 12px;pointer-events:none">
           <div class="logo-icon">RS</div>
           <span>RS<span style="color:var(--accent-teal)">.</span>chess</span>
         </div>
-        <p>A chess platform built by two student players from Uzbekistan. Learn, play, and improve with us.</p>
+        <p style="font-size:0.82rem;line-height:1.7;color:var(--text-muted)">A premium chess platform built by two student players from Uzbekistan 🇺🇿. Learn, play, and improve.</p>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <div style="width:32px;height:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent-teal)'" onmouseout="this.style.borderColor='var(--border)'">🐙</div>
+          <div style="width:32px;height:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent-teal)'" onmouseout="this.style.borderColor='var(--border)'">🐦</div>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Play</h4>
@@ -1912,13 +2976,13 @@ body { overflow-x: hidden; }
 
     <div class="play-center" id="play-center">
       <!-- Waiting state -->
-      <div id="play-waiting" style="text-align:center;padding:60px 20px">
-        <div style="font-size:4rem;margin-bottom:20px">♟</div>
-        <h2 style="font-size:1.8rem;margin-bottom:12px">Ready to play?</h2>
-        <p style="color:var(--text-secondary);margin-bottom:24px">Choose a time control and find a game, or pick a play mode from the sidebar.</p>
-        <button class="btn btn-primary btn-xl" onclick="startMatchmaking()">⚡ Find Quick Game</button>
-        <div style="margin-top:20px">
-          <button class="btn btn-outline" onclick="startVsComputer()">Play vs Computer</button>
+      <div id="play-waiting" style="text-align:center;padding:60px 20px;max-width:480px;margin:0 auto">
+        <div style="width:80px;height:80px;margin:0 auto 24px;background:linear-gradient(135deg,rgba(0,214,181,0.15),rgba(17,203,234,0.1));border:1px solid rgba(0,214,181,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;animation:floatY 3s ease-in-out infinite">♟</div>
+        <h2 style="font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px">Ready to play?</h2>
+        <p style="color:var(--text-secondary);margin-bottom:28px;line-height:1.6">Choose your time control and find a real opponent, or sharpen your skills against the computer.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
+          <button class="btn btn-primary btn-xl" onclick="startMatchmaking()" style="gap:8px">⚡ Find Opponent</button>
+          <button class="btn btn-outline btn-xl" onclick="startVsComputer()" style="gap:8px">🤖 vs Computer</button>
         </div>
       </div>
 
@@ -1989,8 +3053,19 @@ body { overflow-x: hidden; }
 <!-- ═══════════════════════════════ PUZZLES PAGE ═══════════════════════════════ -->
 <div id="puzzles-page" class="page">
   <div class="section">
-    <h1 style="font-size:2rem;margin-bottom:8px">🧩 Tactical Puzzles</h1>
-    <p style="color:var(--text-secondary);margin-bottom:32px">Sharpen your calculation. One puzzle at a time.</p>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2);color:var(--accent-yellow);padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">⚔ Training</div>
+        <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px">Tactical Puzzles</h1>
+        <p style="color:var(--text-secondary);font-size:1rem">Sharpen your calculation. One position at a time.</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:10px 16px;text-align:center">
+          <div style="font-size:1.4rem;font-weight:800;color:var(--accent-teal)" id="puz-rating-header">1200</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Puzzle Rating</div>
+        </div>
+      </div>
+    </div>
     
     <div class="puzzle-layout">
       <div class="puzzle-board-wrap">
@@ -2055,8 +3130,9 @@ body { overflow-x: hidden; }
 <!-- ═══════════════════════════════ LEARN PAGE ═══════════════════════════════ -->
 <div id="learn-page" class="page">
   <div class="learn-hero">
-    <h1>Chess Courses</h1>
-    <p>Structured learning from beginner fundamentals to advanced strategy. Built to help you improve fast.</p>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,214,181,0.1);border:1px solid rgba(0,214,181,0.2);color:var(--accent-teal);padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px">📚 Chess Academy</div>
+    <h1>Master Chess,<br><span style="color:var(--accent-teal)">One Course at a Time</span></h1>
+    <p>From beginner fundamentals to advanced strategy — structured courses built to help you improve fast.</p>
     <div style="max-width:400px;margin:0 auto 20px;position:relative">
       <input type="text" class="form-input" placeholder="🔍  Search courses…" id="course-search" oninput="filterCourses(this.value)" style="padding-left:16px">
     </div>
@@ -2093,8 +3169,11 @@ body { overflow-x: hidden; }
 <!-- ═══════════════════════════════ LEADERBOARD PAGE ═══════════════════════════════ -->
 <div id="leaderboard-page" class="page">
   <div class="section">
-    <h1 style="font-size:2rem;margin-bottom:8px">🏆 Leaderboards</h1>
-    <p style="color:var(--text-secondary);margin-bottom:24px">Top players on RS.chess by rating category.</p>
+    <div style="margin-bottom:24px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(231,185,79,0.1);border:1px solid rgba(231,185,79,0.2);color:var(--accent-gold);padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">🏆 Rankings</div>
+      <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px">Global Leaderboard</h1>
+      <p style="color:var(--text-secondary)">Top rated players on RS.chess by time control.</p>
+    </div>
     <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="showLB('rapid',this)" id="lb-rapid-btn">🕐 Rapid</button>
       <button class="btn btn-outline btn-sm" onclick="showLB('blitz',this)" id="lb-blitz-btn">⚡ Blitz</button>
@@ -2149,10 +3228,19 @@ body { overflow-x: hidden; }
     <div>
       <!-- Overview tab -->
       <div class="tab-content active" id="tab-overview">
-        <div class="stats-row">
-          <div class="stat-box"><div class="stat-box-num" id="stat-games">0</div><div class="stat-box-label">Games Played</div></div>
-          <div class="stat-box"><div class="stat-box-num" style="color:var(--accent-green)" id="stat-wins">0</div><div class="stat-box-label">Wins</div></div>
-          <div class="stat-box"><div class="stat-box-num" style="color:var(--accent-red)" id="stat-losses">0</div><div class="stat-box-label">Losses</div></div>
+        <div class="stats-row" style="margin-bottom:20px">
+          <div class="stat-box" style="text-align:center;padding:20px">
+            <div class="stat-box-num" id="stat-games" style="color:var(--text-primary)">0</div>
+            <div class="stat-box-label" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;margin-top:4px">Games</div>
+          </div>
+          <div class="stat-box" style="text-align:center;padding:20px">
+            <div class="stat-box-num" id="stat-wins" style="color:var(--accent-green)">0</div>
+            <div class="stat-box-label" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;margin-top:4px">Wins</div>
+          </div>
+          <div class="stat-box" style="text-align:center;padding:20px">
+            <div class="stat-box-num" id="stat-losses" style="color:var(--accent-red)">0</div>
+            <div class="stat-box-label" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;margin-top:4px">Losses</div>
+          </div>
         </div>
         <div class="rating-graph">
           <div class="rg-header">
@@ -2257,6 +3345,7 @@ body { overflow-x: hidden; }
         </div>
       </div>
       <div class="auth-title">Welcome back</div>
+      <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-bottom:20px;margin-top:-8px">Sign in to your RS.chess account</p>
       <button class="btn-google" onclick="loginWithGoogle()">
         <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285f4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34a853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#fbbc05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#ea4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
         Continue with Google
@@ -2292,7 +3381,8 @@ body { overflow-x: hidden; }
           RS<span style="color:var(--accent-teal)">.</span>chess
         </div>
       </div>
-      <div class="auth-title">Join RS.chess — it's free</div>
+      <div class="auth-title">Create your account</div>
+      <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-bottom:20px;margin-top:-8px">Join RS.chess — your chess journey starts here</p>
       <button class="btn-google" onclick="loginWithGoogle()">
         <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285f4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34a853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#fbbc05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#ea4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
         Continue with Google
@@ -3403,7 +4493,7 @@ function handlePuzzleClick(idx) {
             document.getElementById('puzzle-status').textContent = '✅ Excellent! Puzzle solved!';
             document.getElementById('puzzle-status').className = 'puzzle-status ps-correct';
             document.getElementById('puz-correct').textContent = APP.puzzleCorrect;
-            document.getElementById('puz-rating').textContent = APP.puzzleRating;
+            document.getElementById('puz-rating').textContent = APP.puzzleRating; const prh=document.getElementById('puz-rating-header'); if(prh) prh.textContent=APP.puzzleRating;
             showToast('Puzzle solved! +15 rating', 'success');
           }
         } else {
@@ -3412,7 +4502,7 @@ function handlePuzzleClick(idx) {
           document.getElementById('puzzle-status').textContent = '❌ Not the best move. Try again!';
           document.getElementById('puzzle-status').className = 'puzzle-status ps-wrong';
           document.getElementById('puz-wrong').textContent = APP.puzzleWrong;
-          document.getElementById('puz-rating').textContent = APP.puzzleRating;
+          document.getElementById('puz-rating').textContent = APP.puzzleRating; const prh=document.getElementById('puz-rating-header'); if(prh) prh.textContent=APP.puzzleRating;
           SoundEngine.illegal();
           showToast('Not the best move', 'error');
         }
@@ -5828,7 +6918,7 @@ async function joinFirestoreGame(gameId, myColor) {
         <button class="btn btn-sm btn-outline" onclick="offerDraw()">½ Draw</button>
         <button class="btn btn-sm btn-danger" onclick="resignGame()">⚑ Resign</button>
       </div>
-      <div class="move-list-panel"><div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Moves</div><div class="move-list" id="move-list"></div></div>
+      <div class="move-list-panel" style="background:linear-gradient(145deg,var(--bg-card),var(--bg-panel));border:1px solid var(--border);border-radius:var(--radius-md)"><div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Move History</div><div class="move-list" id="move-list"></div></div>
     </div>
   `;
 
@@ -6203,6 +7293,192 @@ function updateActiveClockHighlight() {
   cbEl.classList.toggle('active-turn', !isWhiteTurn);
 }
 
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// PREMIUM MOTION SYSTEM
+// ═══════════════════════════════════════════════════════════════════════
+
+// ── Page transition enhancement ──
+const _origShowPagePremium = window.showPage || showPage;
+let _lastPage = 'home';
+
+window.showPage = function(name) {
+  // Trigger enter animation on new page
+  const newPage = document.getElementById(name + '-page');
+  if (newPage) {
+    newPage.classList.add('entering');
+    setTimeout(() => newPage.classList.remove('entering'), 400);
+  }
+  _origShowPagePremium(name);
+  _lastPage = name;
+};
+
+// ── Intersection Observer for scroll reveals ──
+function initScrollReveal() {
+  if (typeof IntersectionObserver === 'undefined') return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  // Observe feature cards, course cards, stat boxes when they come into view
+  setTimeout(() => {
+    document.querySelectorAll('.feature-card, .course-card, .stat-box, .tournament-card, .founder-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.animationDelay = `${i * 50}ms`;
+      observer.observe(el);
+    });
+  }, 100);
+}
+
+// ── Stagger card grids on page load ──
+function staggerCards(containerId, delay = 60) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const cards = container.querySelectorAll('.course-card, .feature-card, .tournament-card, .card');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.animation = `fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) ${i * delay}ms both`;
+  });
+}
+
+// ── Counter animation ──
+function animateCounter(el, target, duration = 1200) {
+  if (!el) return;
+  const start = 0;
+  const increment = target / (duration / 16);
+  let current = start;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      el.textContent = target.toLocaleString();
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current).toLocaleString();
+    }
+  }, 16);
+}
+
+// ── Premium toast override ──
+const _origShowToast = window.showToast || showToast;
+window.showToast = function(msg, type = 'info') {
+  const ct = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  toast.innerHTML = `<span style="font-size:1rem">${icons[type]||'ℹ'}</span><span>${msg}</span>`;
+  ct.appendChild(toast);
+
+  // Auto dismiss with exit animation
+  const hideToast = () => {
+    toast.style.animation = 'toastOut 0.25s cubic-bezier(0.4,0,1,1) both';
+    setTimeout(() => toast.remove(), 280);
+  };
+  const timer = setTimeout(hideToast, 3200);
+  toast.addEventListener('click', () => { clearTimeout(timer); hideToast(); });
+};
+
+// ── Premium hover effect on nav logo board ──
+function initHeroBoardHover() {
+  const container = document.querySelector('.mini-board-container');
+  if (!container) return;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    container.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 4}deg)`;
+  });
+  container.addEventListener('mouseleave', () => {
+    container.style.transform = '';
+    container.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+  });
+}
+
+// ── Progress bar animation ──
+function animateProgressBar(el, targetPct, duration = 800) {
+  if (!el) return;
+  el.style.width = '0%';
+  el.style.transition = `width ${duration}ms cubic-bezier(0.16,1,0.3,1)`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      el.style.width = targetPct + '%';
+    });
+  });
+}
+
+// ── Achievement pop animation ──
+function playAchievementAnimation(el) {
+  if (!el) return;
+  el.style.animation = 'achievementPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both';
+}
+
+// ── Background ambient animation for home ──
+function initAmbientBackground() {
+  const page = document.getElementById('home-page');
+  if (!page) return;
+
+  let frame;
+  let t = 0;
+  function animate() {
+    t += 0.003;
+    const x1 = 15 + Math.sin(t) * 5;
+    const y1 = 45 + Math.cos(t * 0.7) * 8;
+    const x2 = 85 + Math.cos(t * 0.8) * 5;
+    const y2 = 15 + Math.sin(t * 1.2) * 6;
+    page.style.background = `
+      radial-gradient(ellipse 80% 60% at ${x1}% ${y1}%, rgba(0,214,181,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at ${x2}% ${y2}%, rgba(17,203,234,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 70% at 50% 95%, rgba(155,109,255,0.04) 0%, transparent 50%),
+      #070A10
+    `;
+    frame = requestAnimationFrame(animate);
+  }
+  // Only animate if not reduced motion
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    frame = requestAnimationFrame(animate);
+  }
+  // Stop when leaving home
+  const origSP = window.showPage;
+  window.showPage = function(name) {
+    if (name !== 'home' && frame) {
+      cancelAnimationFrame(frame);
+      frame = null;
+    } else if (name === 'home' && !frame) {
+      frame = requestAnimationFrame(animate);
+    }
+    origSP(name);
+  };
+}
+
+// ── Initialize premium features after DOM ready ──
+function initPremiumFeatures() {
+  initScrollReveal();
+  initHeroBoardHover();
+  initAmbientBackground();
+
+  // Add entrance animations to initial visible cards
+  setTimeout(() => {
+    staggerCards('featured-courses', 80);
+  }, 400);
+}
+
+// Run after existing init
+const _existingInit = window.init;
+window.init = function() {
+  if (_existingInit) _existingInit();
+  setTimeout(initPremiumFeatures, 50);
+};
+
+// If init already ran, call directly
+if (document.readyState !== 'loading') {
+  setTimeout(initPremiumFeatures, 100);
+}
+
 </script>
 
 <!-- FORGOT PASSWORD PAGE -->
@@ -6216,6 +7492,7 @@ function updateActiveClockHighlight() {
         </div>
       </div>
       <div class="auth-title">Reset Password</div>
+      <div style="width:56px;height:56px;background:rgba(0,214,181,0.1);border:1px solid rgba(0,214,181,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 16px">🔑</div>
       <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-bottom:20px">Enter your email and we'll send a reset link.</p>
       <div class="form-group">
         <label class="form-label">Email</label>
@@ -6233,8 +7510,11 @@ function updateActiveClockHighlight() {
 <!-- FRIENDS PAGE -->
 <div id="friends-page" class="page">
   <div class="section">
-    <h1 style="font-size:2rem;margin-bottom:8px">👥 Friends</h1>
-    <p style="color:var(--text-secondary);margin-bottom:24px">Find players, send friend requests, challenge friends.</p>
+    <div style="margin-bottom:24px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(61,142,245,0.1);border:1px solid rgba(61,142,245,0.2);color:var(--accent-blue);padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">👥 Community</div>
+      <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px">Friends</h1>
+      <p style="color:var(--text-secondary)">Find players, send friend requests, challenge anyone to a game.</p>
+    </div>
     <div class="friends-layout">
       <div>
         <!-- Search -->
@@ -6297,8 +7577,12 @@ function updateActiveClockHighlight() {
 <div id="tournaments-page" class="page">
   <div class="section">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px">
-      <h1 style="font-size:2rem">🏆 Tournaments</h1>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(240,78,94,0.1);border:1px solid rgba(240,78,94,0.2);color:var(--accent-red);padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">🎯 Competition</div>
+        <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.02em">Tournaments</h1>
+      </div>
       <button class="btn btn-primary" onclick="showCreateTournament()" id="create-tourney-btn" style="display:none">+ Create Tournament</button>
+    </div>
     </div>
     <p style="color:var(--text-secondary);margin-bottom:24px">Compete in structured chess tournaments.</p>
     
